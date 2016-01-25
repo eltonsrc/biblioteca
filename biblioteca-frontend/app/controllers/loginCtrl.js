@@ -1,3 +1,3 @@
-angular.module("biblioteca").controller("loginCtrl", function ($scope) {
+angular.module("biblioteca").controller("loginCtrl", ["$scope", function ($scope) {
 	
-});
+}]);

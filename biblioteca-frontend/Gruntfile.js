@@ -10,9 +10,6 @@ module.exports = function(grunt) {
         },
         uglify: {
             production: {
-                options: {
-                    mangle: false
-                },
                 files: {
                     'assets/js/main.js': [
                     'bower_components/angular/angular.js',
@@ -22,8 +19,7 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
-                    beautify: true,
-                    mangle: false
+                    beautify: true
                 },
                 files: {
                     'assets/js/main.js': [
