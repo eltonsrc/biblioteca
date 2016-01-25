@@ -1,0 +1,24 @@
+{
+  "name": "biblioteca",
+  "description": "Sistema simples para controle de uma biblioteca.",
+  "main": "index.js",
+  "authors": [
+    "Elton Serra Ribeiro Couto"
+  ],
+  "license": "Apache License, Version 2.0",
+  "keywords": [
+    "biblioteca",
+    "angular",
+    "grunt",
+    "gulp"
+  ],
+  "homepage": "https://github.com/eltonsrc/biblioteca",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

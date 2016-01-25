@@ -1,0 +1,31 @@
+{
+  "name": "biblioteca",
+  "version": "0.0.1",
+  "description": "Sistema simples para controle de uma biblioteca.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eltonsrc/biblioteca"
+  },
+  "keywords": [
+    "biblioteca",
+    "angular",
+    "grunt",
+    "gulp"
+  ],
+  "author": "Elton Serra Ribeiro Couto",
+  "license": "Apache License, Version 2.0",
+  "bugs": {
+    "url": "https://github.com/eltonsrc/biblioteca/issues"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}
