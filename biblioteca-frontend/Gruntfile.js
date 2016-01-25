@@ -3,25 +3,41 @@ module.exports = function(grunt) {
     grunt.initConfig({
         concat: {
             dist: {
-                src: [ 'js/src/functions.js', 'js/src/core.js' ],
-                dest: 'js/dist/projeto.js',
+                src: ['bower_components/bootstrap/dist/css/bootstrap.min.css',
+                'assets/css/app.css'],
+                dest: 'assets/css/main.css',
             }
         },
         uglify: {
-            dist: {
+            production: {
+                options: {
+                    mangle: false
+                },
                 files: {
-                    'js/dist/projeto.js': [
-                    'js/src/functions.js', 
-                    'js/src/core.js']
+                    'assets/js/main.js': [
+                    'bower_components/angular/angular.js',
+                    'bower_components/angular-route/angular-route.js',
+                    'app/**/*.js']
+                }
+            },
+            dev: {
+                options: {
+                    beautify: true,
+                    mangle: false
+                },
+                files: {
+                    'assets/js/main.js': [
+                    'bower_components/angular/angular.js',
+                    'bower_components/angular-route/angular-route.js',
+                    'app/**/*.js']
                 }
             }
         },
         cssmin: {
             dist: {
                 files: {
-                    'css/dist/projeto.css': [
-                        'css/src/components.css',
-                        'css/src/core.css'
+                    'assets/css/main.css': [
+                    'assets/css/main.css'
                     ]
                 }
             }
@@ -29,10 +45,20 @@ module.exports = function(grunt) {
         watch: {
             scripts: {
                 files: [
-                    'js/src/functions.js',
-                    'js/src/core.js'
+                '**/*.html', 
+                '**/*.css', 
+                '**/*.js'
                 ],
                 tasks: ['default']
+            }
+        },
+        connect: {
+            server: {
+                options: {
+                    port: 8000,
+                    debug: true,
+                    livereload: true
+                }
             }
         }
     });
@@ -42,7 +68,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
     // definição das tarefas
-    grunt.registerTask('default', ['concat', 'uglify', 'cssmin']);
+    grunt.registerTask('default', ['concat', 'uglify:dev', 'cssmin', 'connect:server', 'watch']);
+    grunt.registerTask('build', ['concat', 'uglify:production', 'cssmin']);
 };
