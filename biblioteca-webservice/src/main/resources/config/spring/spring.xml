@@ -8,9 +8,11 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<!-- Essas configurações estão separadas por questões de organização, mas 
+		poderiam estar todas num único arquivo xml -->
+	<import resource="../database/dataSource.xml" />
+	<import resource="../database/hibernate.xml" />
+
 	<context:annotation-config />
 	<context:component-scan base-package="br.org.am.biblioteca" />
-
-<!-- 	<bean -->
-<!-- 		class="org.jboss.resteasy.plugins.spring.SpringBeanProcessorServletAware" /> -->
 </beans>

@@ -14,15 +14,13 @@
 
 	<listener>
 		<listener-class>
-			org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap
-		</listener-class>
+			org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
 	</listener>
 
 	<servlet>
 		<servlet-name>resteasy-servlet</servlet-name>
 		<servlet-class>
-			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
-		</servlet-class>
+			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -34,7 +32,7 @@
 	<!-- Configuração do Spring -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring.xml</param-value>
+		<param-value>classpath:config/spring/spring.xml</param-value>
 	</context-param>
 
 	<listener>
