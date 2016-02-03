@@ -2,8 +2,11 @@ package br.org.am.biblioteca.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Documento extends BaseModel {
@@ -114,7 +117,7 @@ public class Documento extends BaseModel {
         this.dataAtualizacao = dataAtualizacao;
     }
 
-    @Column(nullable = false)
+    @ManyToOne(optional = false)
     public Usuario getUsuarioCriador() {
         return usuarioCriador;
     }
@@ -123,7 +126,7 @@ public class Documento extends BaseModel {
         this.usuarioCriador = usuarioCriador;
     }
 
-    @Column(nullable = false)
+    @ManyToOne(optional = false)
     public Usuario getUsuarioAtualizador() {
         return usuarioAtualizador;
     }
@@ -132,7 +135,7 @@ public class Documento extends BaseModel {
         this.usuarioAtualizador = usuarioAtualizador;
     }
 
-    @Column(nullable = false)
+    @ManyToOne(optional = true)
     public GeneroDocumental getGeneroDocumental() {
         return generoDocumental;
     }
@@ -141,7 +144,7 @@ public class Documento extends BaseModel {
         this.generoDocumental = generoDocumental;
     }
 
-    @Column(nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     public IndexacaoDocumento getIndexacaoDocumento() {
         return indexacaoDocumento;
     }

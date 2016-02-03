@@ -9,7 +9,6 @@ public class Usuario extends BaseModel {
 
     private String nome;
     private String email;
-    private String login;
     private String senha;
 
     @Column(nullable = false, length = 255)
@@ -28,15 +27,6 @@ public class Usuario extends BaseModel {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Column(nullable = false, unique = true, length = 255)
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     @Column(nullable = false, length = 255)
