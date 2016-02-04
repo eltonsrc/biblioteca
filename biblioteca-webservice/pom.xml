@@ -42,16 +42,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Ótima para rest -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jaxrs</artifactId>
-			<version>${resteasy.version}</version>
-			<!-- O jBoss 7.x já inclui -->
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- Para o RestEasy acessar os beans do spring -->
+		<!-- RestEasy e lib para acessar os beans do spring -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-spring</artifactId>
@@ -65,13 +56,6 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<!-- Para criar datasource a partir do spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-
 		<!-- Para o Spring acessar o hibernate -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -80,40 +64,12 @@
 		</dependency>
 
 		<!-- Dependências do Hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>3.2.7.ga</version>
-		</dependency>
-
+		<!-- Nesta versão do hibernate-annotations já vem com o hibernate-core 
+			e hibernate-commons-annotations -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
 			<version>3.5.6-Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>3.2.0.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>1.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.2.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>3.12.1.GA</version>
 		</dependency>
 
 		<!-- Driver JDBC 4 para conexão com banco de dados -->
