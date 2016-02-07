@@ -6876,11 +6876,15 @@ function(a, b, c) {
     var h = b.module("ngRoute", [ "ng" ]).provider("$route", d), i = b.$$minErr("ngRoute");
     h.provider("$routeParams", e), h.directive("ngView", f), h.directive("ngView", g), 
     f.$inject = [ "$route", "$anchorScroll", "$animate" ], g.$inject = [ "$compile", "$controller", "$route" ];
-}(window, window.angular), angular.module("biblioteca", [ "ngRoute" ]), angular.module("biblioteca").config([ "$routeProvider", function(a) {
+}(window, window.angular), angular.module("biblioteca", [ "ngRoute" ]), angular.module("biblioteca").config([ "$routeProvider", "$locationProvider", function(a, b) {
     a.when("/", {
         templateUrl: "view/login.html",
         controller: "loginCtrl"
+    }), a.when("/home", {
+        templateUrl: "view/home.html",
+        controller: "homeCtrl"
     }), a.otherwise({
         redirectTo: "/"
     });
-} ]), angular.module("biblioteca").controller("loginCtrl", [ "$scope", function(a) {} ]);
+} ]), angular.module("biblioteca").controller("homeCtrl", [ "$scope", function(a) {} ]), 
+angular.module("biblioteca").controller("loginCtrl", [ "$scope", function(a) {} ]);
