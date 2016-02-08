@@ -1,0 +1,99 @@
+<div class="container">
+	<div ng-include="'view/header.html'"></div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Incluir documento</div>
+		<div class="panel-body">
+			<form role="form">
+				<div class="form-group">
+					<label for="text">Código de referência</label>
+					<input type="text" class="form-control" id="codRef">
+				</div>
+
+				<div class="form-group">
+					<label for="tituloFormal">Título formal</label>
+					<input type="text" class="form-control" id="tituloFormal">
+				</div>
+
+				<div class="form-group">
+					<label for="tituloAtribuido">Título atribuído</label>
+					<input type="text" class="form-control" id="tituloAtribuido">
+				</div>
+
+				<div class="form-group">
+					<label for="descr">Descrição semântica</label>
+					<textarea class="form-control" rows="4" id="descr"></textarea>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-xs-2">
+							<label for="dataProducao">Data de produção</label>
+							<input type="date" class="form-control" id="dataProducao">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-xs-2">
+							<label for="dataAcumulacao">Data de acumulação</label>
+							<input type="date" class="form-control" id="dataAcumulacao">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="especieDocumental">Espécie documental</label>
+					<input type="text" class="form-control" id="especieDocumental">
+				</div>
+
+				<div class="form-group">
+					<label for="generoDocumental">Gênero documental</label>
+					<br>
+					<label class="radio-inline"><input type="radio" name="optradio">Option 1</label>
+					<label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
+					<label class="radio-inline"><input type="radio" name="optradio">Option 3</label> 
+				</div>
+
+				<div class="form-group">
+					<label for="nivelDescricao">Nível de descrição</label>
+					<input type="text" class="form-control" id="nivelDescricao">
+				</div>
+
+				<div class="form-group">
+					<label for="dimensaoSuporte">Dimensão e suporte</label>
+					<input type="text" class="form-control" id="dimensaoSuporte">
+				</div>
+
+				<div class="form-group">
+					<label for="nomeProdutores">Nome dos produtores</label>
+					<input type="text" class="form-control" id="nomeProdutores">
+				</div>
+
+				<div class="form-group">
+					<label for="notaConservacao">Notas sobre conservação</label>
+					<textarea class="form-control" rows="4" id="notaConservacao"></textarea>
+				</div>
+
+				<div class="form-group">
+					<label for="notasGerais">Notas gerais</label>
+					<textarea class="form-control" rows="4" id="notasGerais"></textarea>
+				</div>
+
+				<div class="form-group">
+					<label for="palavrasChaves">Pontos de acesso e indexação</label>
+					<input type="text" class="form-control" id="palavrasChaves">
+				</div>
+
+				<div class="form-group">
+					<label for="localizacaoInterna">Localização interna</label>
+					<input type="text" class="form-control" id="localizacaoInterna">
+				</div>
+
+				<button type="submit" class="btn btn-primary">Incluir</button>
+				<a class="btn btn-danger" href="#/home">Cancelar</a>
+			</form>
+		</div>
+	</div>
+</div>

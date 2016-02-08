@@ -6883,6 +6883,9 @@ function(a, b, c) {
     }), a.when("/home", {
         templateUrl: "view/home.html",
         controller: "homeCtrl"
+    }), a.when("/documento/incluir", {
+        templateUrl: "view/documentoForm.html",
+        controller: "homeCtrl"
     }), a.otherwise({
         redirectTo: "/"
     });

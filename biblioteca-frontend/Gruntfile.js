@@ -45,7 +45,7 @@ module.exports = function(grunt) {
                 '**/*.css', 
                 '**/*.js'
                 ],
-                tasks: ['default']
+                tasks: ['devBuild']
             }
         },
         connect: {
@@ -68,5 +68,6 @@ module.exports = function(grunt) {
 
     // definição das tarefas
     grunt.registerTask('default', ['concat', 'uglify:dev', 'cssmin', 'connect:server', 'watch']);
+    grunt.registerTask('devBuild', ['concat', 'uglify:dev', 'cssmin']);
     grunt.registerTask('build', ['concat', 'uglify:production', 'cssmin']);
 };

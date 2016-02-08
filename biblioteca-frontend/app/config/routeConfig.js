@@ -7,5 +7,9 @@ angular.module("biblioteca").config(["$routeProvider", "$locationProvider", func
 		templateUrl: "view/home.html",
 		controller: "homeCtrl",
 	});
+	$routeProvider.when("/documento/incluir", {
+		templateUrl: "view/documentoForm.html",
+		controller: "homeCtrl",
+	});
 	$routeProvider.otherwise({redirectTo: "/"});
 }]);
