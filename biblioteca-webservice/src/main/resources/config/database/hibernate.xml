@@ -28,6 +28,7 @@
 				<value>br.org.am.biblioteca.model.GeneroDocumental</value>
 				<value>br.org.am.biblioteca.model.IndexacaoDocumento</value>
 				<value>br.org.am.biblioteca.model.Usuario</value>
+				<value>br.org.am.biblioteca.model.Grupo</value>
 			</list>
 		</property>
 	</bean>

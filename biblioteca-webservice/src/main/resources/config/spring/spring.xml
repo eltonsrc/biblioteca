@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
-        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context 
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<!-- Essas configurações estão separadas por questões de organização, mas 
 		poderiam estar todas num único arquivo xml -->
@@ -15,4 +16,27 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="br.org.am.biblioteca" />
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="filters">
+			<!-- Foram criados filtros customizados para sobrescrever o comportamento 
+				padrão do shiro de fazer redirect para uma página de login -->
+			<util:map>
+				<entry key="customAuthc" value-ref="authenticationFilter" />
+				<entry key="customRoles" value-ref="authorizationFilter" />
+			</util:map>
+		</property>
+		<property name="filterChainDefinitions">
+			<value>
+				/rest/login = anon
+				/rest/user/** = customAuthc, customRoles[admin]
+				/rest/** = customAuthc
+			</value>
+		</property>
+	</bean>
+
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="hibernateRealm" />
+	</bean>
 </beans>

@@ -34,6 +34,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Para fazer a segurança da aplicação -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.2.4</version>
+		</dependency>
+
 		<!-- Servlet contido no servidor web, por isso está como provided. -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
