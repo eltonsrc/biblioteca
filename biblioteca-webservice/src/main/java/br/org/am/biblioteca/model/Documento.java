@@ -17,7 +17,6 @@ public class Documento extends BaseModel {
     private String tituloAtribuido;
     private String descr;
     private Date dataProducao;
-    private Date dataAcumulacao;
     private String dimensaoSuporte;
     private String nomeProdutores;
     private Date dataCriacao;
@@ -70,15 +69,6 @@ public class Documento extends BaseModel {
 
     public void setDataProducao(Date dataProducao) {
         this.dataProducao = dataProducao;
-    }
-
-    @Column(nullable = true)
-    public Date getDataAcumulacao() {
-        return dataAcumulacao;
-    }
-
-    public void setDataAcumulacao(Date dataAcumulacao) {
-        this.dataAcumulacao = dataAcumulacao;
     }
 
     @Column(nullable = true, length = 255)

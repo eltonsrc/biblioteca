@@ -39,7 +39,7 @@ public class Usuario extends BaseModel {
         this.email = email;
     }
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 64)
     public String getSenha() {
         return senha;
     }

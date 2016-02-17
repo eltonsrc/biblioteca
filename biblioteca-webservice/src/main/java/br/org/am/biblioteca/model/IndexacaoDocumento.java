@@ -1,5 +1,7 @@
 package br.org.am.biblioteca.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -13,6 +15,7 @@ public class IndexacaoDocumento extends BaseModel {
     private String localizacaoInterna;
     private String especieDocumental;
     private String nivelDescricao;
+    private Date dataAcumulacao;
 
     @Column(nullable = true, length = 4000)
     public String getNotasConservacao() {
@@ -66,5 +69,14 @@ public class IndexacaoDocumento extends BaseModel {
 
     public void setNivelDescricao(String nivelDescricao) {
         this.nivelDescricao = nivelDescricao;
+    }
+
+    @Column(nullable = true)
+    public Date getDataAcumulacao() {
+        return dataAcumulacao;
+    }
+
+    public void setDataAcumulacao(Date dataAcumulacao) {
+        this.dataAcumulacao = dataAcumulacao;
     }
 }
