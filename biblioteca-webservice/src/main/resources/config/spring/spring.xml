@@ -41,7 +41,8 @@
 		</property>
 		<property name="filterChainDefinitions">
 			<value>
-				/rest/login = anon
+				/rest/auth/login = customAuthc
+				/rest/auth/logout = anon
 				/rest/user/** = customAuthc, customRoles[admin]
 				/rest/** = customAuthc
 			</value>

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @Path("/")
-public class InfoService {
+public class InfoController {
     @GET
     @Path("/info")
     public Response info() {
