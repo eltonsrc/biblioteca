@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import br.org.am.biblioteca.model.Usuario;
 
 @Repository
-public class UsuarioDAOHibernate extends HibernateDAO<Usuario> implements UsuarioDAO {
+class UsuarioDAOHibernate extends HibernateDAO<Usuario> implements UsuarioDAO {
     public Usuario findById(String id) {
         return (Usuario) getCurrentSession().get(Usuario.class, id);
     }
@@ -22,5 +22,11 @@ public class UsuarioDAOHibernate extends HibernateDAO<Usuario> implements Usuari
         session.close();
 
         return usuario;
+    }
+
+    public Usuario findByEmail(String email) {
+        return (Usuario) getCurrentSession()
+                .createQuery("select u from Usuario u where u.email = ?")
+                .setParameter(0, email).uniqueResult();
     }
 }

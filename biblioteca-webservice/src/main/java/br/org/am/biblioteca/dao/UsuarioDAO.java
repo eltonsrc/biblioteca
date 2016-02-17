@@ -12,4 +12,6 @@ public interface UsuarioDAO extends DAO<Usuario> {
      * @return
      */
     Usuario findByEmailWithProgramaticTransaction(String email);
+
+    Usuario findByEmail(String email);
 }

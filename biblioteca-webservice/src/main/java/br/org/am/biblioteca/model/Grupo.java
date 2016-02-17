@@ -19,7 +19,7 @@ public class Grupo extends BaseModel {
     private String nome;
     private Set<Usuario> usuarioSet = new HashSet<Usuario>(0);
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 255, unique = true)
     public String getNome() {
         return nome;
     }
