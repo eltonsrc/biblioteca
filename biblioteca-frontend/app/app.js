@@ -1,1 +1,1 @@
-angular.module("biblioteca", ["ngRoute"]);
+angular.module("biblioteca", ["ngRoute", "ab-base64"]);

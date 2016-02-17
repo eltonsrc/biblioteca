@@ -14,6 +14,7 @@ module.exports = function(grunt) {
                     'assets/js/main.js': [
                     'bower_components/angular/angular.js',
                     'bower_components/angular-route/angular-route.js',
+                    'bower_components/angular-utf8-base64/angular-utf8-base64.js',
                     'app/**/*.js']
                 }
             },
@@ -25,6 +26,7 @@ module.exports = function(grunt) {
                     'assets/js/main.js': [
                     'bower_components/angular/angular.js',
                     'bower_components/angular-route/angular-route.js',
+                    'bower_components/angular-utf8-base64/angular-utf8-base64.js',
                     'app/**/*.js']
                 }
             }
@@ -43,7 +45,9 @@ module.exports = function(grunt) {
                 files: [
                 '**/*.html', 
                 '**/*.css', 
-                '**/*.js'
+                '**/*.js',
+                '!assets/css/main.css',
+                '!assets/js/main.js'
                 ],
                 tasks: ['devBuild']
             }
@@ -67,7 +71,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
 
     // definição das tarefas
-    grunt.registerTask('default', ['concat', 'uglify:dev', 'cssmin', 'connect:server', 'watch']);
+    grunt.registerTask('default', ['concat', 'uglify:dev', 'cssmin', 'watch']);
+    grunt.registerTask('serve', ['concat', 'uglify:dev', 'cssmin', 'connect:server', 'watch']);
     grunt.registerTask('devBuild', ['concat', 'uglify:dev', 'cssmin']);
     grunt.registerTask('build', ['concat', 'uglify:production', 'cssmin']);
 };

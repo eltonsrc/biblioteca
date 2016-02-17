@@ -1,7 +1,7 @@
 angular.module("biblioteca").config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
 	$routeProvider.when("/", {
 		templateUrl: "view/login.html",
-		controller: "loginCtrl",
+		controller: "loginController",
 	});
 	$routeProvider.when("/home", {
 		templateUrl: "view/home.html",

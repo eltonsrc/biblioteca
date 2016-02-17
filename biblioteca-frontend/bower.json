@@ -24,6 +24,7 @@
   "dependencies": {
     "bootstrap": "~3.3.6",
     "angular": "~1.4.9",
-    "angular-route": "~1.4.9"
+    "angular-route": "~1.4.9",
+    "angular-utf8-base64": "~0.0.5"
   }
 }

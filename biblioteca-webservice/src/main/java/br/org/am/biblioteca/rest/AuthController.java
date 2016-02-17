@@ -17,7 +17,7 @@ public class AuthController {
     public Response login() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
-            return Response.status(Status.OK).entity("Login ok").build();
+            return Response.status(Status.OK).entity("").build();
         }
 
         return Response.status(Status.UNAUTHORIZED).build();
@@ -27,6 +27,6 @@ public class AuthController {
     @Path("/logout")
     public Response logout() {
         SecurityUtils.getSubject().logout();
-        return Response.ok().entity("Logout ok").build();
+        return Response.ok().entity("").build();
     }
 }

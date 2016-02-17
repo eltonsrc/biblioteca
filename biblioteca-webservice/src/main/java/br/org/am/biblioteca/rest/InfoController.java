@@ -12,6 +12,6 @@ public class InfoController {
     @GET
     @Path("/info")
     public Response info() {
-        return Response.status(200).entity("Teste: OK").build();
+        return Response.status(200).entity("").build();
     }
 }

@@ -1,16 +1,19 @@
 <div class="container login-container">
 	<h1 class="system-title login-system-title">Nome do sistema</h1>
 	<div class="well">
+		<div class="alert alert-warning" ng-show="invalidLogin">
+			Email e/ou senha inválidos.
+		</div>
 		<form role="form" name="loginForm">
 			<div class="form-group">
 				<label for="login">Login:</label>
-				<input type="text" class="form-control" id="login" ng-model="user.login" ng-required="true">
+				<input type="text" class="form-control" id="login" ng-model="email" ng-required="true">
 			</div>
 			<div class="form-group">
 				<label for="senha">Senha:</label>
-				<input type="password" class="form-control" id="senha" ng-model="user.senha" ng-required="true">
+				<input type="password" class="form-control" id="senha" ng-model="senha" ng-required="true">
 			</div>
-			<button type="submit" class="btn btn-primary btn-block" ng-disabled="loginForm.$invalid">Entrar</button>
+			<button type="submit" class="btn btn-primary btn-block" ng-click="login()" ng-disabled="loginForm.$invalid">Entrar</button>
 		</form>
 	</div>
 </div>

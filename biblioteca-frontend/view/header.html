@@ -1,4 +1,4 @@
- <nav class="navbar navbar-default">
+ <nav class="navbar navbar-default" ng-controller="loginController">
  	<div class="container-fluid">
  		<div class="navbar-header">
  			<a class="navbar-brand" href="#/home">Nome do sistema</a>
@@ -8,7 +8,9 @@
  			<li><a href="#/usuario/list">Usuário</a></li>
  		</ul>
  		<ul class="nav navbar-nav navbar-right">
- 			<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+ 			<li>
+ 				<button type="button" class="btn btn-link" ng-click="logout();">Sair</button>
+ 			</li>
  		</ul>
  	</div>
  </nav>
