@@ -18,11 +18,11 @@
 	<import resource="../database/dataSource.xml" />
 	<import resource="../database/hibernate.xml" />
 
-	<context:annotation-config />
+	<!-- Para procurar pelas anotações do spring -->
 	<context:component-scan base-package="br.org.am.biblioteca" />
 
-	<!-- Usado para o controle de transação que por padrão procura pelo bean 
-		com id transactionManager -->
+	<!-- Usado para o controle de transação -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="dataSource" ref="dataSource" />
