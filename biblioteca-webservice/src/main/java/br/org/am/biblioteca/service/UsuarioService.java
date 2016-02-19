@@ -4,4 +4,6 @@ import br.org.am.biblioteca.model.Usuario;
 
 public interface UsuarioService {
     Usuario findByEmail(String email);
+
+    void save(Usuario usuario);
 }

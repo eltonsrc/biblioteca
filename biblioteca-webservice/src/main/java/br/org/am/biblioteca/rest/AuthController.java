@@ -10,7 +10,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 
-import br.org.am.biblioteca.rest.json.UsuarioJSON;
+import br.org.am.biblioteca.rest.json.UsuarioViewJSON;
 
 @Controller
 @Path("/auth")
@@ -25,7 +25,7 @@ public class AuthController extends BaseRestController {
             return Response.status(Status.UNAUTHORIZED).build();
         }
 
-        return Response.status(Status.OK).entity(new UsuarioJSON(getUsuarioLogado()))
+        return Response.status(Status.OK).entity(new UsuarioViewJSON(getUsuarioLogado()))
                 .build();
     }
 

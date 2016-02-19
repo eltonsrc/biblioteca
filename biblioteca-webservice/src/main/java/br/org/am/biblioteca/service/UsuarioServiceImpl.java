@@ -20,4 +20,8 @@ class UsuarioServiceImpl implements UsuarioService {
     public Usuario findByEmail(String email) {
         return usuarioDAO.findByEmail(email);
     }
+
+    public void save(Usuario usuario) {
+        usuarioDAO.save(usuario);
+    }
 }

@@ -4,28 +4,43 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Incluir usuário</div>
 		<div class="panel-body">
-			<form role="form">
+			<form role="form" name="usuarioForm">
+				<input type="hidden" class="form-control" ng-model="usuario.id">
+
 				<div class="form-group">
-					<label for="text">Nome</label>
-					<input type="text" class="form-control" id="codRef">
+					<label for="nome">Nome</label>
+					<input type="text" class="form-control" id="nome" name="nome" ng-model="usuario.nome" ng-required="true">
 				</div>
 
 				<div class="form-group">
-					<label for="tituloFormal">Email</label>
-					<input type="text" class="form-control" id="tituloFormal">
+					<label for="email">Email</label>
+					<div class="alert alert-warning" ng-show="usuarioForm.email.$dirty && usuarioForm.email.$invalid">
+						Deve ser um email válido.
+					</div>
+					<input type="email" class="form-control" id="email" name="email" ng-model="usuario.email" ng-required="true">
 				</div>
 
 				<div class="form-group">
-					<label for="tituloAtribuido">Senha</label>
-					<input type="text" class="form-control" id="tituloAtribuido">
+					<label for="senha">Senha</label>
+					<div ng-show="usuarioForm.senha.$error.minlength && usuarioForm.senha.$dirty" class="alert alert-danger">
+						A senha deve ter no mínimo 6 dígitos.
+					</div>
+					<input type="password" class="form-control" id="senha" name="senha" ng-model="usuario.senha" ng-minlength="6" ng-required="true">
 				</div>
 
 				<div class="form-group">
-					<label for="descr">Confirmar senha</label>
-					<input type="text" class="form-control" id="tituloAtribuido">
+					<label for="confSenha">Confirmar senha</label>
+					<div class="alert alert-danger" ng-hide="validSenha">
+						Não está igual a senha.
+					</div>
+					<input type="password" class="form-control" id="confSenha" name="confSenha" ng-model="confSenha" ng-required="required">
 				</div>
 
-				<button type="submit" class="btn btn-primary">Incluir</button>
+				<div class="form-group">
+					<label class="checkbox-inline"><input type="checkbox" value="admin" ng-model="isAdmin">Administrador</label>
+				</div>
+
+				<button type="submit" class="btn btn-primary" ng-click="saveUsuario()" ng-disabled="usuarioForm.$invalid">Incluir</button>
 				<a class="btn btn-danger" href="#/usuario/list">Cancelar</a>
 			</form>
 		</div>

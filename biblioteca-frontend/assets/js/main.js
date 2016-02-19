@@ -6956,13 +6956,13 @@ function(a, b, c) {
         controller: "homeCtrl"
     }), a.when("/usuario/list", {
         templateUrl: "view/usuarioList.html",
-        controller: "homeCtrl"
+        controller: "usuarioController"
     }), a.when("/usuario/incluir", {
         templateUrl: "view/usuarioForm.html",
-        controller: "homeCtrl"
+        controller: "usuarioController"
     }), a.when("/usuario", {
         templateUrl: "view/usuarioList.html",
-        controller: "homeCtrl"
+        controller: "usuarioController"
     }), a.otherwise({
         redirectTo: "/"
     });
@@ -6983,15 +6983,32 @@ angular.module("biblioteca").controller("loginController", [ "$scope", "authServ
             alert("Erro na comunicação com o servidor.");
         });
     };
+} ]), angular.module("biblioteca").controller("usuarioController", [ "$scope", "$location", "usuarioService", function(a, b, c) {
+    a.validSenha = !0, a.grupo = [], a.saveUsuario = function() {
+        var b = a.usuario;
+        a.validSenha = b.senha == a.confSenha, a.validSenha && (a.isAdmin && (b.grupos = [ "admin" ]), 
+        c.saveUsuario(b, function(a) {
+            var b = a.data;
+            b.error && alert(b.error.message);
+        }, function(a) {
+            alert("Ocorreu um erro status: " + a.status);
+        }));
+    };
 } ]), angular.module("biblioteca").factory("authService", [ "$http", "serverConstants", "base64", function(a, b, c) {
     var d = function(d, e, f, g) {
-        a.defaults.headers.common.Authorization = "Basic " + c.encode(d + ":" + e), a.defaults.headers.common["Content-type"] = void 0, 
-        a.get(b.URL + "/auth/login").then(f, g);
+        a.defaults.headers.common.Authorization = "Basic " + c.encode(d + ":" + e), a.get(b.URL + "/auth/login").then(f, g);
     }, e = function(c, d) {
-        console.log("TESTE"), a.get(b.URL + "/auth/logout").then(c, d);
+        a.get(b.URL + "/auth/logout").then(c, d);
     };
     return {
         login: d,
         logout: e
+    };
+} ]), angular.module("biblioteca").factory("usuarioService", [ "$http", "serverConstants", function(a, b) {
+    var c = function(c, d, e) {
+        c.id ? a.put(b.URL + "/usuario", c).then(d, e) : a.post(b.URL + "/usuario", c).then(d, e);
+    };
+    return {
+        saveUsuario: c
     };
 } ]);

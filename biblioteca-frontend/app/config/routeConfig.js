@@ -13,15 +13,15 @@ angular.module("biblioteca").config(["$routeProvider", "$locationProvider", func
 	});
 	$routeProvider.when("/usuario/list", {
 		templateUrl: "view/usuarioList.html",
-		controller: "homeCtrl",
+		controller: "usuarioController",
 	});
 	$routeProvider.when("/usuario/incluir", {
 		templateUrl: "view/usuarioForm.html",
-		controller: "homeCtrl",
+		controller: "usuarioController",
 	});
 	$routeProvider.when("/usuario", {
 		templateUrl: "view/usuarioList.html",
-		controller: "homeCtrl",
+		controller: "usuarioController",
 	});
 	$routeProvider.otherwise({redirectTo: "/"});
 }]);

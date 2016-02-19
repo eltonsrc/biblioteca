@@ -6,11 +6,11 @@ import java.util.Set;
 import br.org.am.biblioteca.model.Grupo;
 import br.org.am.biblioteca.model.Usuario;
 
-public class UsuarioJSON {
+public class UsuarioViewJSON {
     private Usuario usuario;
     private Set<String> grupoList;
 
-    public UsuarioJSON(Usuario usuario) {
+    public UsuarioViewJSON(Usuario usuario) {
         this.usuario = usuario;
 
         grupoList = new HashSet<String>();
