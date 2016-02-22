@@ -7,12 +7,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.codehaus.jackson.map.annotate.JsonView;
 import org.hibernate.annotations.GenericGenerator;
+
+import br.org.am.biblioteca.rest.json.View;
 
 @MappedSuperclass
 public abstract class BaseModel implements Serializable {
     private static final long serialVersionUID = 6925883998941136884L;
 
+    @JsonView(View.Public.class)
     protected String id;
 
     @Id

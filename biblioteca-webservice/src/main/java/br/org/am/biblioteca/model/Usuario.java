@@ -11,14 +11,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.codehaus.jackson.map.annotate.JsonView;
+
+import br.org.am.biblioteca.rest.json.View;
+
 @Entity
 public class Usuario extends BaseModel {
     private static final long serialVersionUID = -3385290898126479834L;
 
+    @JsonView(View.Public.class)
     private String nome;
+    @JsonView(View.Public.class)
     private String email;
+    @JsonView(View.Private.class)
     private String senha;
 
+    @JsonView(View.Public.class)
     private Set<Grupo> grupoSet = new HashSet<Grupo>(0);
 
     @Column(nullable = false, length = 255)

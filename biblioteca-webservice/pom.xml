@@ -54,6 +54,19 @@
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-spring</artifactId>
 			<version>${resteasy.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>resteasy-jettison-provider</artifactId>
+					<groupId>org.jboss.resteasy</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Uso do jackson para trabalhar com JSON -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.0.16.Final</version>
 		</dependency>
 
 		<!-- Spring web project -->

@@ -1,6 +1,11 @@
 package br.org.am.biblioteca.rest;
 
+import java.io.IOException;
+
 import org.apache.shiro.SecurityUtils;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.org.am.biblioteca.model.Usuario;
@@ -16,8 +21,32 @@ public class BaseRestController {
         this.usuarioService = usuarioService;
     }
 
-    protected Usuario getUsuarioLogado() {
+    protected final Usuario getUsuarioLogado() {
         String email = SecurityUtils.getSubject().getPrincipal().toString();
         return usuarioService.findByEmail(email);
+    }
+
+    /**
+     * Por algum motivo(que ainda não entendi :P), a anotação JSONView não
+     * funcionou automaticamente, por isso tenho que aplicar manualmente.
+     * 
+     * @param object
+     * @param viewClass
+     * @return
+     */
+    protected final String parseToJson(Object object, Class<?> viewClass) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            return mapper.writerWithView(viewClass).writeValueAsString(object);
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }
