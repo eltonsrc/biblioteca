@@ -13,7 +13,7 @@ angular.module("biblioteca").config(["$routeProvider", "$locationProvider", func
 	});
 	$routeProvider.when("/usuario/list", {
 		templateUrl: "view/usuarioList.html",
-		controller: "usuarioController",
+		controller: "usuarioController"
 	});
 	$routeProvider.when("/usuario/incluir", {
 		templateUrl: "view/usuarioForm.html",

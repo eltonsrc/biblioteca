@@ -60,7 +60,7 @@ public class Usuario extends BaseModel {
     // será necessário saber a que grupo o usuário pertence, por isso optou-se
     // pro EAGER fetch. Se ocorrer problemas de desempenho, deve-se revisar o
     // FetchType.
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "usuario_grupo", joinColumns = {
             @JoinColumn(name = "usuario_id", nullable = false, updatable = false) }, inverseJoinColumns = {
                     @JoinColumn(name = "grupo_id", nullable = false, updatable = false) })

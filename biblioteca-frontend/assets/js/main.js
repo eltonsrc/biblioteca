@@ -6984,16 +6984,31 @@ angular.module("biblioteca").controller("loginController", [ "$scope", "authServ
         });
     };
 } ]), angular.module("biblioteca").controller("usuarioController", [ "$scope", "$location", "usuarioService", function(a, b, c) {
-    a.validSenha = !0, a.grupo = [], a.saveUsuario = function() {
-        var b = a.usuario;
-        a.validSenha = b.senha == a.confSenha, a.validSenha && (a.isAdmin && (b.grupos = [ "admin" ]), 
-        c.saveUsuario(b, function(a) {
-            var b = a.data;
-            b.error && alert(b.error.message);
+    a.validSenha = !0, a.grupo = [];
+    var d = function() {
+        c.getUsuario(void 0, function(b) {
+            a.usuarioList = b.data;
+        }, function(a) {
+            alert("Erro status: " + a.status);
+        });
+    };
+    a.saveUsuario = function() {
+        var d = a.usuario;
+        a.validSenha = d.senha == a.confSenha, a.validSenha && (a.isAdmin && (d.grupoSet = [ {
+            nome: "admin"
+        } ]), c.saveUsuario(d, function(a) {
+            var c = a.data;
+            c.error ? alert(c.error.message) : b.path("/usuario/list");
         }, function(a) {
             alert("Ocorreu um erro status: " + a.status);
         }));
-    };
+    }, a.deleteUsuario = function(a) {
+        c.deleteUsuario(a, function(a) {
+            d();
+        }, function(a) {
+            401 == a.status ? alert("Você não tem autorização para excluir este usuário.") : alert("Ocorreu um erro status: " + a.status);
+        });
+    }, d();
 } ]), angular.module("biblioteca").factory("authService", [ "$http", "serverConstants", "base64", function(a, b, c) {
     var d = function(d, e, f, g) {
         a.defaults.headers.common.Authorization = "Basic " + c.encode(d + ":" + e), a.get(b.URL + "/auth/login").then(f, g);
@@ -7007,8 +7022,14 @@ angular.module("biblioteca").controller("loginController", [ "$scope", "authServ
 } ]), angular.module("biblioteca").factory("usuarioService", [ "$http", "serverConstants", function(a, b) {
     var c = function(c, d, e) {
         c.id ? a.put(b.URL + "/usuario", c).then(d, e) : a.post(b.URL + "/usuario", c).then(d, e);
+    }, d = function(c, d, e) {
+        c || a.get(b.URL + "/usuario").then(d, e);
+    }, e = function(c, d, e) {
+        a["delete"](b.URL + "/usuario/" + c).then(d, e);
     };
     return {
-        saveUsuario: c
+        saveUsuario: c,
+        getUsuario: d,
+        deleteUsuario: e
     };
 } ]);

@@ -1,22 +1,6 @@
 <div class="container">
 	<div ng-include="'view/header.html'"></div>
 
-	<div id="busca" class="jumbotron">
-    <form class="form-horizontal" role="form">
-      <div class="form-group">
-        <label for="nome">Nome:</label>
-        <input type="text" class="form-control" id="nome">
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" class="form-control" id="email">
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-default">Buscar</button>
-      </div>
-    </form>
-  </div>
-
   <a class="btn btn-default" href="#/usuario/incluir">Incluir usuário</a>
 
   <div id="resultado">
@@ -25,20 +9,21 @@
         <tr>
           <th>Nome</th>
           <th>Email</th>
+          <th>Grupo</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>John</td>
-          <td>john@example.com</td>
-        </tr>
-        <tr>
-          <td>Mary</td>
-          <td>mary@example.com</td>
-        </tr>
-        <tr>
-          <td>July</td>
-          <td>july@example.com</td>
+        <tr ng-repeat="usuario in usuarioList">
+          <td>{{usuario.nome}}</td>
+          <td>{{usuario.email}}</td>
+          <td>{{usuario.grupoSet[0].nome}}</td>
+          <td>
+            <div class="pull-right">
+              <a class="btn btn-warning btn-sm" href="#/usuario/{{usuario.id}}">Editar</a>
+              <button class="btn btn-danger btn-sm" ng-click="deleteUsuario(usuario.id)">Apagar</button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

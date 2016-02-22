@@ -3,6 +3,7 @@ package br.org.am.biblioteca.rest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -17,7 +18,7 @@ import br.org.am.biblioteca.rest.json.View;
 public class AuthController extends BaseRestController {
     @GET
     @Path("/login")
-    @Produces(APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response login() {
         Subject subject = SecurityUtils.getSubject();
 
@@ -31,7 +32,7 @@ public class AuthController extends BaseRestController {
 
     @GET
     @Path("/logout")
-    @Produces(APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response logout() {
         SecurityUtils.getSubject().logout();
         return Response.ok().entity("").build();

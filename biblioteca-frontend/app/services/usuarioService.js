@@ -7,7 +7,21 @@ angular.module("biblioteca").factory("usuarioService", ["$http", "serverConstant
 		}
 	};
 
+	var _getUsuario = function(id, success, failure) {
+		if (id) {
+			// TODO: realizar get por id do usuario.
+		} else {
+			$http.get(serverConstants.URL + "/usuario").then(success, failure);
+		}
+	};
+
+	var _deleteUsuario = function(id, success, failure) {
+		$http.delete(serverConstants.URL + "/usuario/" + id).then(success, failure);
+	};
+
 	return {
-		saveUsuario: _saveUsuario
+		saveUsuario: _saveUsuario,
+		getUsuario: _getUsuario,
+		deleteUsuario: _deleteUsuario
 	};
 }]);
