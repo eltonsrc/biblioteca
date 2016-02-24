@@ -1,6 +1,21 @@
-angular.module("biblioteca").controller("usuarioController", ["$scope", "$location", "usuarioService", function ($scope, $location, usuarioService) {
+angular.module("biblioteca").controller("usuarioController", ["$scope", "$location", "usuarioService", "usuarioList", "usuario", function ($scope, $location, usuarioService, usuarioList, usuario) {
 	$scope.validSenha = true;
 	$scope.grupo = [];
+
+	$scope.usuarioList = usuarioList;
+	$scope.usuario = usuario;
+
+	var verifyUsuarioAdmin = function(usuario) {
+		if (usuario) {
+			if (usuario.grupoSet) {
+				return usuario.grupoSet.find(function(grupo) {
+					return grupo.nome == "admin";
+				});
+			}
+		}
+
+		return false;
+	};
 
 	var carregarUsuarioList = function() {
 		usuarioService.getUsuario(undefined, function(response) {
@@ -18,6 +33,8 @@ angular.module("biblioteca").controller("usuarioController", ["$scope", "$locati
 		if ($scope.validSenha) {
 			if ($scope.isAdmin) {
 				usuario.grupoSet = [{nome: "admin"}];
+			} else {
+				delete usuario.grupoSet;
 			}
 
 			usuarioService.saveUsuario(usuario, function(response) {
@@ -46,5 +63,7 @@ angular.module("biblioteca").controller("usuarioController", ["$scope", "$locati
 		});
 	};
 
-	carregarUsuarioList();
+	if (verifyUsuarioAdmin($scope.usuario)) {
+		$scope.isAdmin = true;
+	}
 }]);

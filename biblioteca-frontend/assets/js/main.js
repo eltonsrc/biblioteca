@@ -6956,10 +6956,33 @@ function(a, b, c) {
         controller: "homeCtrl"
     }), a.when("/usuario/list", {
         templateUrl: "view/usuarioList.html",
-        controller: "usuarioController"
+        controller: "usuarioController",
+        resolve: {
+            usuarioList: [ "usuarioService", function(a) {
+                return a.getUsuario(null, function(a) {
+                    return a.data;
+                });
+            } ],
+            usuario: function() {}
+        }
     }), a.when("/usuario/incluir", {
         templateUrl: "view/usuarioForm.html",
-        controller: "usuarioController"
+        controller: "usuarioController",
+        resolve: {
+            usuarioList: function() {},
+            usuario: function() {}
+        }
+    }), a.when("/usuario/:id", {
+        templateUrl: "view/usuarioForm.html",
+        controller: "usuarioController",
+        resolve: {
+            usuario: [ "usuarioService", "$route", function(a, b) {
+                return a.getUsuario(b.current.params.id, function(a) {
+                    return a.data;
+                });
+            } ],
+            usuarioList: function() {}
+        }
     }), a.when("/usuario", {
         templateUrl: "view/usuarioList.html",
         controller: "usuarioController"
@@ -6983,9 +7006,13 @@ angular.module("biblioteca").controller("loginController", [ "$scope", "authServ
             alert("Erro na comunicação com o servidor.");
         });
     };
-} ]), angular.module("biblioteca").controller("usuarioController", [ "$scope", "$location", "usuarioService", function(a, b, c) {
-    a.validSenha = !0, a.grupo = [];
-    var d = function() {
+} ]), angular.module("biblioteca").controller("usuarioController", [ "$scope", "$location", "usuarioService", "usuarioList", "usuario", function(a, b, c, d, e) {
+    a.validSenha = !0, a.grupo = [], a.usuarioList = d, a.usuario = e;
+    var f = function(a) {
+        return a && a.grupoSet ? a.grupoSet.find(function(a) {
+            return "admin" == a.nome;
+        }) : !1;
+    }, g = function() {
         c.getUsuario(void 0, function(b) {
             a.usuarioList = b.data;
         }, function(a) {
@@ -6994,9 +7021,9 @@ angular.module("biblioteca").controller("loginController", [ "$scope", "authServ
     };
     a.saveUsuario = function() {
         var d = a.usuario;
-        a.validSenha = d.senha == a.confSenha, a.validSenha && (a.isAdmin && (d.grupoSet = [ {
+        a.validSenha = d.senha == a.confSenha, a.validSenha && (a.isAdmin ? d.grupoSet = [ {
             nome: "admin"
-        } ]), c.saveUsuario(d, function(a) {
+        } ] : delete d.grupoSet, c.saveUsuario(d, function(a) {
             var c = a.data;
             c.error ? alert(c.error.message) : b.path("/usuario/list");
         }, function(a) {
@@ -7004,11 +7031,11 @@ angular.module("biblioteca").controller("loginController", [ "$scope", "authServ
         }));
     }, a.deleteUsuario = function(a) {
         c.deleteUsuario(a, function(a) {
-            d();
+            g();
         }, function(a) {
             401 == a.status ? alert("Você não tem autorização para excluir este usuário.") : alert("Ocorreu um erro status: " + a.status);
         });
-    }, d();
+    }, f(a.usuario) && (a.isAdmin = !0);
 } ]), angular.module("biblioteca").factory("authService", [ "$http", "serverConstants", "base64", function(a, b, c) {
     var d = function(d, e, f, g) {
         a.defaults.headers.common.Authorization = "Basic " + c.encode(d + ":" + e), a.get(b.URL + "/auth/login").then(f, g);
@@ -7023,7 +7050,7 @@ angular.module("biblioteca").controller("loginController", [ "$scope", "authServ
     var c = function(c, d, e) {
         c.id ? a.put(b.URL + "/usuario", c).then(d, e) : a.post(b.URL + "/usuario", c).then(d, e);
     }, d = function(c, d, e) {
-        c || a.get(b.URL + "/usuario").then(d, e);
+        return c ? a.get(b.URL + "/usuario/" + c).then(d, e) : a.get(b.URL + "/usuario").then(d, e);
     }, e = function(c, d, e) {
         a["delete"](b.URL + "/usuario/" + c).then(d, e);
     };

@@ -41,6 +41,15 @@ public class UsuarioController extends BaseRestController {
                 .entity(parseToJson(usuarioService.list(), View.Public.class)).build();
     }
 
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsuario(@PathParam("id") String id) {
+        return Response.status(200)
+                .entity(parseToJson(usuarioService.findById(id), View.Public.class))
+                .build();
+    }
+
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)

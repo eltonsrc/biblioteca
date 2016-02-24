@@ -13,11 +13,35 @@ angular.module("biblioteca").config(["$routeProvider", "$locationProvider", func
 	});
 	$routeProvider.when("/usuario/list", {
 		templateUrl: "view/usuarioList.html",
-		controller: "usuarioController"
+		controller: "usuarioController",
+		resolve: {
+			usuarioList: ["usuarioService", function (usuarioService) {
+				return usuarioService.getUsuario(null, function(response) {
+					return response.data;
+				});
+			}],
+			usuario: function(){}
+		}
 	});
 	$routeProvider.when("/usuario/incluir", {
 		templateUrl: "view/usuarioForm.html",
 		controller: "usuarioController",
+		resolve: {
+			usuarioList: function(){},
+			usuario: function(){}
+		}
+	});
+	$routeProvider.when("/usuario/:id", {
+		templateUrl: "view/usuarioForm.html",
+		controller: "usuarioController",
+		resolve: {
+			usuario: ["usuarioService", "$route", function (usuarioService, $route) {
+				return usuarioService.getUsuario($route.current.params.id, function(response) {
+					return response.data;
+				});
+			}],
+			usuarioList: function(){}
+		}
 	});
 	$routeProvider.when("/usuario", {
 		templateUrl: "view/usuarioList.html",

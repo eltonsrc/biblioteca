@@ -9,9 +9,10 @@ angular.module("biblioteca").factory("usuarioService", ["$http", "serverConstant
 
 	var _getUsuario = function(id, success, failure) {
 		if (id) {
-			// TODO: realizar get por id do usuario.
+			return $http.get(serverConstants.URL + "/usuario/" + id).then(success, failure);
 		} else {
-			$http.get(serverConstants.URL + "/usuario").then(success, failure);
+			// pega lista de usuários
+			return $http.get(serverConstants.URL + "/usuario").then(success, failure);
 		}
 	};
 
