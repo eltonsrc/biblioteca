@@ -19,6 +19,8 @@ import br.org.am.biblioteca.rest.json.View;
 public class Usuario extends BaseModel {
     private static final long serialVersionUID = -3385290898126479834L;
 
+    public static final String USUARIO_ADMINISTRADOR = "administrador";
+
     @JsonView(View.Public.class)
     private String nome;
     @JsonView(View.Public.class)
@@ -56,8 +58,8 @@ public class Usuario extends BaseModel {
         this.senha = senha;
     }
 
-    // Para este sistema o usuário não terá muitos grupos e na maioria das vezes
-    // será necessário saber a que grupo o usuário pertence, por isso optou-se
+    // Para este sistema o usuï¿½rio nï¿½o terï¿½ muitos grupos e na maioria das vezes
+    // serï¿½ necessï¿½rio saber a que grupo o usuï¿½rio pertence, por isso optou-se
     // pro EAGER fetch. Se ocorrer problemas de desempenho, deve-se revisar o
     // FetchType.
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

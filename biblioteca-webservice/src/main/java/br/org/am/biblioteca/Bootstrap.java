@@ -69,20 +69,20 @@ class Bootstrap {
     }
 
     private void criarAdminLogin() {
-        Grupo grupo = grupoDAO.findByNome("admin");
+        Grupo grupo = grupoDAO.findByNome(Grupo.GRUPO_ADMIN);
 
         if (grupo == null) {
             grupo = new Grupo();
-            grupo.setNome("admin");
+            grupo.setNome(Grupo.GRUPO_ADMIN);
             grupoDAO.save(grupo);
         }
 
-        Usuario usuario = usuarioDAO.findByEmail("administrador");
+        Usuario usuario = usuarioDAO.findByEmail(Usuario.USUARIO_ADMINISTRADOR);
 
         if (usuario == null) {
             usuario = new Usuario();
             usuario.setNome("Administrador");
-            usuario.setEmail("administrador");
+            usuario.setEmail(Usuario.USUARIO_ADMINISTRADOR);
             // alterar esta senha quando em produ��o
             usuario.setSenha(new Sha256Hash("123456").toHex());
             usuario.getGrupoSet().add(grupo);

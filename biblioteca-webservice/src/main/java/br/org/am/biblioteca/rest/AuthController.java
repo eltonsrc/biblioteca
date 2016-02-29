@@ -11,6 +11,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 
+import br.org.am.biblioteca.model.Grupo;
+import br.org.am.biblioteca.model.Usuario;
 import br.org.am.biblioteca.rest.json.View;
 
 @Controller
@@ -36,5 +38,25 @@ public class AuthController extends BaseRestController {
     public Response logout() {
         SecurityUtils.getSubject().logout();
         return Response.ok().entity("").build();
+    }
+
+    @GET
+    @Path("/admin")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response isAdmin() {
+        Usuario usuario = getUsuarioLogado();
+
+        if (usuario == null) {
+            return Response.status(401).entity("").build();
+        }
+
+        for (Grupo grupo : usuario.getGrupoSet()) {
+            if (Grupo.GRUPO_ADMIN.equals(grupo.getNome())) {
+                return Response.ok().entity(parseToJson(grupo, View.Public.class))
+                        .build();
+            }
+        }
+
+        return Response.status(401).entity("").build();
     }
 }

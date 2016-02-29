@@ -13,12 +13,14 @@ import org.codehaus.jackson.map.annotate.JsonView;
 import br.org.am.biblioteca.rest.json.View;
 
 /**
- * Classe utilizada para saber o grupo(role) de acesso do usuário.
+ * Classe utilizada para saber o grupo(role) de acesso do usuï¿½rio.
  *
  */
 @Entity
 public class Grupo extends BaseModel {
     private static final long serialVersionUID = -463493738204146130L;
+
+    public static final String GRUPO_ADMIN = "admin";
 
     @JsonView(View.Public.class)
     private String nome;
