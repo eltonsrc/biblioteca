@@ -9,7 +9,31 @@ angular.module("biblioteca").config(["$routeProvider", "$locationProvider", func
 	});
 	$routeProvider.when("/documento/incluir", {
 		templateUrl: "view/documentoForm.html",
-		controller: "homeCtrl",
+		controller: "documentoController",
+		resolve: {
+			generoDocumentalList: ["documentoService", function(documentoService) {
+				return documentoService.getGeneroList(function(response) {
+					return response.data;
+				});
+			}],
+			documento: function(){}
+		}
+	});
+	$routeProvider.when("/documento/:id", {
+		templateUrl: "view/documentoForm.html",
+		controller: "documentoController",
+		resolve: {
+			generoDocumentalList: ["documentoService", function(documentoService) {
+				return documentoService.getGeneroList(function(response) {
+					return response.data;
+				});
+			}],
+			documento: ["documentoService", "$route", function(documentoService, $route) {
+				return documentoService.getDocumento($route.current.params.id, function(response) {
+					return response.data;
+				})
+			}]
+		}
 	});
 	$routeProvider.when("/usuario/list", {
 		templateUrl: "view/usuarioList.html",

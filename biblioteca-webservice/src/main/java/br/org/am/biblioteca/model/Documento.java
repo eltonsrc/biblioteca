@@ -8,22 +8,39 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.codehaus.jackson.map.annotate.JsonView;
+
+import br.org.am.biblioteca.rest.json.View;
+
 @Entity
 public class Documento extends BaseModel {
     private static final long serialVersionUID = 5267348545723975952L;
 
+    @JsonView(View.Public.class)
     private String codRef;
+    @JsonView(View.Public.class)
     private String tituloFormal;
+    @JsonView(View.Public.class)
     private String tituloAtribuido;
+    @JsonView(View.Public.class)
     private String descr;
+    @JsonView(View.Public.class)
     private Date dataProducao;
+    @JsonView(View.Public.class)
     private String dimensaoSuporte;
+    @JsonView(View.Public.class)
     private String nomeProdutores;
+    @JsonView(View.Public.class)
     private Date dataCriacao;
+    @JsonView(View.Public.class)
     private Date dataAtualizacao;
+    @JsonView(View.Public.class)
     private Usuario usuarioCriador;
+    @JsonView(View.Public.class)
     private Usuario usuarioAtualizador;
+    @JsonView(View.Public.class)
     private GeneroDocumental generoDocumental;
+    @JsonView(View.Public.class)
     private IndexacaoDocumento indexacaoDocumento;
 
     @Column(nullable = false, unique = true, length = 255)
@@ -35,7 +52,7 @@ public class Documento extends BaseModel {
         this.codRef = codRef;
     }
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = true, length = 255)
     public String getTituloFormal() {
         return tituloFormal;
     }
@@ -44,7 +61,7 @@ public class Documento extends BaseModel {
         this.tituloFormal = tituloFormal;
     }
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = true, length = 255)
     public String getTituloAtribuido() {
         return tituloAtribuido;
     }
@@ -89,7 +106,7 @@ public class Documento extends BaseModel {
         this.nomeProdutores = nomeProdutores;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     public Date getDataCriacao() {
         return dataCriacao;
     }
@@ -98,7 +115,7 @@ public class Documento extends BaseModel {
         this.dataCriacao = dataCriacao;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     public Date getDataAtualizacao() {
         return dataAtualizacao;
     }

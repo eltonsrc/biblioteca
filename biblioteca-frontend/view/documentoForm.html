@@ -2,34 +2,37 @@
 	<div ng-include="'view/header.html'"></div>
 
 	<div class="panel panel-default">
-		<div class="panel-heading">Incluir documento</div>
+		<div class="panel-heading">Documento</div>
 		<div class="panel-body">
-			<form role="form">
+			<form role="form" name="documentoForm">
 				<div class="form-group">
 					<label for="text">Código de referência</label>
-					<input type="text" class="form-control" id="codRef">
+					<input type="text" class="form-control" ng-model="documento.codRef" ng-required="true">
 				</div>
 
 				<div class="form-group">
 					<label for="tituloFormal">Título formal</label>
-					<input type="text" class="form-control" id="tituloFormal">
+					<input type="text" class="form-control" ng-model="documento.tituloFormal">
 				</div>
 
 				<div class="form-group">
 					<label for="tituloAtribuido">Título atribuído</label>
-					<input type="text" class="form-control" id="tituloAtribuido">
+					<input type="text" class="form-control" ng-model="documento.tituloAtribuido">
 				</div>
 
 				<div class="form-group">
 					<label for="descr">Descrição semântica</label>
-					<textarea class="form-control" rows="4" id="descr"></textarea>
+					<textarea class="form-control" rows="4" ng-model="documento.descr"></textarea>
 				</div>
 
 				<div class="form-group">
 					<div class="row">
 						<div class="col-xs-2">
 							<label for="dataProducao">Data de produção</label>
-							<input type="date" class="form-control" id="dataProducao">
+							<div class="alert alert-warning" ng-show="documentoForm.dataProducao.$dirty && documentoForm.dataProducao.$invalid">
+								Deve ser uma data válida.
+							</div>
+							<input type="text" class="form-control" name="dataProducao" ng-model="documento.dataProducao" ng-pattern="/\d{2}\/\d{2}\/\d{4}/">
 						</div>
 					</div>
 				</div>
@@ -38,60 +41,63 @@
 					<div class="row">
 						<div class="col-xs-2">
 							<label for="dataAcumulacao">Data de acumulação</label>
-							<input type="date" class="form-control" id="dataAcumulacao">
+							<div class="alert alert-warning" ng-show="documentoForm.dataAcumulacao.$dirty && documentoForm.dataAcumulacao.$invalid">
+								Deve ser uma data válida.
+							</div>
+							<input type="text" class="form-control" name="dataAcumulacao" ng-model="documento.indexacaoDocumento.dataAcumulacao" ng-pattern="/\d{2}\/\d{2}\/\d{4}/">
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label for="especieDocumental">Espécie documental</label>
-					<input type="text" class="form-control" id="especieDocumental">
+					<input type="text" class="form-control" ng-model="documento.indexacaoDocumento.especieDocumental">
 				</div>
 
 				<div class="form-group">
 					<label for="generoDocumental">Gênero documental</label>
 					<br>
-					<label class="radio-inline"><input type="radio" name="optradio">Option 1</label>
-					<label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
-					<label class="radio-inline"><input type="radio" name="optradio">Option 3</label> 
+					<label class="radio-inline" ng-repeat="genero in generoDocumentalList">
+						<input type="radio" name="genero" ng-model="documento.generoDocumental.id" ng-value="genero.id">{{genero.genero}}
+					</label>
 				</div>
 
 				<div class="form-group">
 					<label for="nivelDescricao">Nível de descrição</label>
-					<input type="text" class="form-control" id="nivelDescricao">
+					<input type="text" class="form-control" ng-model="documento.indexacaoDocumento.nivelDescricao">
 				</div>
 
 				<div class="form-group">
 					<label for="dimensaoSuporte">Dimensão e suporte</label>
-					<input type="text" class="form-control" id="dimensaoSuporte">
+					<input type="text" class="form-control" ng-model="documento.dimensaoSuporte">
 				</div>
 
 				<div class="form-group">
 					<label for="nomeProdutores">Nome dos produtores</label>
-					<input type="text" class="form-control" id="nomeProdutores">
+					<input type="text" class="form-control" ng-model="documento.nomeProdutores">
 				</div>
 
 				<div class="form-group">
 					<label for="notaConservacao">Notas sobre conservação</label>
-					<textarea class="form-control" rows="4" id="notaConservacao"></textarea>
+					<textarea class="form-control" rows="4" ng-model="documento.indexacaoDocumento.notasConservacao"></textarea>
 				</div>
 
 				<div class="form-group">
 					<label for="notasGerais">Notas gerais</label>
-					<textarea class="form-control" rows="4" id="notasGerais"></textarea>
+					<textarea class="form-control" rows="4" ng-model="documento.indexacaoDocumento.notasGerais"></textarea>
 				</div>
 
 				<div class="form-group">
 					<label for="palavrasChaves">Pontos de acesso e indexação</label>
-					<input type="text" class="form-control" id="palavrasChaves">
+					<input type="text" class="form-control" ng-model="documento.indexacaoDocumento.palavrasChaves">
 				</div>
 
 				<div class="form-group">
 					<label for="localizacaoInterna">Localização interna</label>
-					<input type="text" class="form-control" id="localizacaoInterna">
+					<input type="text" class="form-control" ng-model="documento.indexacaoDocumento.localizacaoInterna">
 				</div>
 
-				<button type="submit" class="btn btn-primary">Incluir</button>
+				<button type="submit" class="btn btn-primary" ng-click="saveDocumento()" ng-disabled="documentoForm.$invalid">Salvar</button>
 				<a class="btn btn-danger" href="#/home">Cancelar</a>
 			</form>
 		</div>

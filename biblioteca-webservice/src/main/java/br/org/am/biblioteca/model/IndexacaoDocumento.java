@@ -44,7 +44,7 @@ public class IndexacaoDocumento extends BaseModel {
         this.palavrasChaves = palavrasChaves;
     }
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = true, length = 255)
     public String getLocalizacaoInterna() {
         return localizacaoInterna;
     }
@@ -53,7 +53,7 @@ public class IndexacaoDocumento extends BaseModel {
         this.localizacaoInterna = localizacaoInterna;
     }
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = true, length = 255)
     public String getEspecieDocumental() {
         return especieDocumental;
     }
@@ -62,7 +62,7 @@ public class IndexacaoDocumento extends BaseModel {
         this.especieDocumental = especieDocumental;
     }
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = true, length = 255)
     public String getNivelDescricao() {
         return nivelDescricao;
     }

@@ -5697,7 +5697,7 @@
             };
             return f;
         } ];
-    }, Cf = Bf(), Df = Bf(!0), Ef = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/, Ff = /^[a-z][a-z\d.+-]*:\/*(?:[^:@]+(?::[^@]+)?@)?(?:[^\s:\/?#]+|\[[a-f\d:]+\])(?::\d+)?(?:\/[^?#]*)?(?:\?[^#]*)?(?:#.*)?$/i, Gf = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i, Hf = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/, If = /^(\d{4})-(\d{2})-(\d{2})$/, Jf = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/, Kf = /^(\d{4})-W(\d\d)$/, Lf = /^(\d{4})-(\d\d)$/, Mf = /^(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/, Nf = {
+    }, Cf = Bf(), Df = Bf(!0), Ef = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/, Ff = /^[a-z][a-z\d.+-]*:\/*(?:[^:@]+(?::[^@]+)?@)?(?:[^\s:/?#]+|\[[a-f\d:]+\])(?::\d+)?(?:\/[^?#]*)?(?:\?[^#]*)?(?:#.*)?$/i, Gf = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i, Hf = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/, If = /^(\d{4})-(\d{2})-(\d{2})$/, Jf = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/, Kf = /^(\d{4})-W(\d\d)$/, Lf = /^(\d{4})-(\d\d)$/, Mf = /^(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/, Nf = {
         text: gd,
         date: kd("date", If, jd(If, [ "yyyy", "MM", "dd" ]), "yyyy-MM-dd"),
         "datetime-local": kd("datetimelocal", Jf, jd(Jf, [ "yyyy", "MM", "dd", "HH", "mm", "ss", "sss" ]), "yyyy-MM-ddTHH:mm:ss.sss"),
@@ -6953,7 +6953,30 @@ function(a, b, c) {
         controller: "homeCtrl"
     }), a.when("/documento/incluir", {
         templateUrl: "view/documentoForm.html",
-        controller: "homeCtrl"
+        controller: "documentoController",
+        resolve: {
+            generoDocumentalList: [ "documentoService", function(a) {
+                return a.getGeneroList(function(a) {
+                    return a.data;
+                });
+            } ],
+            documento: function() {}
+        }
+    }), a.when("/documento/:id", {
+        templateUrl: "view/documentoForm.html",
+        controller: "documentoController",
+        resolve: {
+            generoDocumentalList: [ "documentoService", function(a) {
+                return a.getGeneroList(function(a) {
+                    return a.data;
+                });
+            } ],
+            documento: [ "documentoService", "$route", function(a, b) {
+                return a.getDocumento(b.current.params.id, function(a) {
+                    return a.data;
+                });
+            } ]
+        }
     }), a.when("/usuario/list", {
         templateUrl: "view/usuarioList.html",
         controller: "usuarioController",
@@ -6991,7 +7014,26 @@ function(a, b, c) {
     });
 } ]), angular.module("biblioteca").value("serverConstants", {
     URL: "http://localhost:8080/biblioteca/rest"
-}), angular.module("biblioteca").controller("homeCtrl", [ "$scope", function(a) {} ]), 
+}), angular.module("biblioteca").controller("documentoController", [ "$scope", "$location", "documentoService", "generoDocumentalList", "documento", "$filter", function(a, b, c, d, e, f) {
+    var g = function(a) {
+        var b = a.split("/");
+        return new Date(b[2], b[1] - 1, b[0]);
+    }, h = function(a) {
+        return f("date")(a, "dd/MM/yyyy");
+    };
+    a.generoDocumentalList = d, a.documento = e, a.documento && (a.documento.dataProducao && (a.documento.dataProducao = h(a.documento.dataProducao)), 
+    a.documento.indexacaoDocumento.dataAcumulacao && (a.documento.indexacaoDocumento.dataAcumulacao = h(a.documento.indexacaoDocumento.dataAcumulacao))), 
+    a.saveDocumento = function() {
+        var d = angular.copy(a.documento);
+        d.dataProducao && (d.dataProducao = g(d.dataProducao)), d.indexacaoDocumento && d.indexacaoDocumento.dataAcumulacao && (d.indexacaoDocumento.dataAcumulacao = g(d.indexacaoDocumento.dataAcumulacao)), 
+        c.saveDocumento(d, function(a) {
+            var c = a.data;
+            c.error ? alert(c.error) : b.path("/home");
+        }, function(a) {
+            alert("Ocorreu um erro status: " + a.status);
+        });
+    };
+} ]), angular.module("biblioteca").controller("homeCtrl", [ "$scope", function(a) {} ]), 
 angular.module("biblioteca").controller("loginController", [ "$scope", "authService", "$location", function(a, b, c) {
     a.invalidLogin = !1, a.login = function() {
         b.login(a.email, a.senha, function(a) {
@@ -7025,7 +7067,7 @@ angular.module("biblioteca").controller("loginController", [ "$scope", "authServ
             nome: "admin"
         } ] : delete d.grupoSet, c.saveUsuario(d, function(a) {
             var c = a.data;
-            c.error ? alert(c.error.message) : b.path("/usuario/list");
+            c.error ? alert(c.error) : b.path("/usuario/list");
         }, function(a) {
             alert("Ocorreu um erro status: " + a.status);
         }));
@@ -7045,6 +7087,22 @@ angular.module("biblioteca").controller("loginController", [ "$scope", "authServ
     return {
         login: d,
         logout: e
+    };
+} ]), angular.module("biblioteca").factory("documentoService", [ "$http", "serverConstants", function(a, b) {
+    var c = function(c, d, e) {
+        c.id ? a.put(b.URL + "/documento", c).then(d, e) : a.post(b.URL + "/documento", c).then(d, e);
+    }, d = function(c, d, e) {
+        return c ? a.get(b.URL + "/documento/" + c).then(d, e) : a.get(b.URL + "/documento").then(d, e);
+    }, e = function(c, d) {
+        return a.get(b.URL + "/documento/generoList").then(c, d);
+    }, f = function(c, d, e) {
+        a["delete"](b.URL + "/documento/" + c).then(d, e);
+    };
+    return {
+        saveDocumento: c,
+        getDocumento: d,
+        deleteDocumento: f,
+        getGeneroList: e
     };
 } ]), angular.module("biblioteca").factory("usuarioService", [ "$http", "serverConstants", function(a, b) {
     var c = function(c, d, e) {

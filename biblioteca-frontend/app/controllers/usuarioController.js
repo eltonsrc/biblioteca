@@ -41,7 +41,7 @@ angular.module("biblioteca").controller("usuarioController", ["$scope", "$locati
 				var json = response.data;
 
 				if (json.error) {
-					alert(json.error.message);
+					alert(json.error);
 				} else {
 					$location.path("/usuario/list");
 				}

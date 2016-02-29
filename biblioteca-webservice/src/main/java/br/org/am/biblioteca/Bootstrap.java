@@ -10,13 +10,15 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import br.org.am.biblioteca.dao.GeneroDocumentalDAO;
 import br.org.am.biblioteca.dao.GrupoDAO;
 import br.org.am.biblioteca.dao.UsuarioDAO;
+import br.org.am.biblioteca.model.GeneroDocumental;
 import br.org.am.biblioteca.model.Grupo;
 import br.org.am.biblioteca.model.Usuario;
 
 /**
- * Classe usada para iniciar valores no banco de dados. NÂO confundir com o
+ * Classe usada para iniciar valores no banco de dados. Nï¿½O confundir com o
  * framework front-end Bootstrap.
  *
  */
@@ -25,6 +27,7 @@ class Bootstrap {
     private PlatformTransactionManager transactionManager;
     private GrupoDAO grupoDAO;
     private UsuarioDAO usuarioDAO;
+    private GeneroDocumentalDAO generoDocumentalDAO;
 
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -41,10 +44,15 @@ class Bootstrap {
         this.usuarioDAO = usuarioDAO;
     }
 
+    @Autowired
+    public void setGeneroDocumentalDAO(GeneroDocumentalDAO generoDocumentalDAO) {
+        this.generoDocumentalDAO = generoDocumentalDAO;
+    }
+
     /**
-     * Anotação PostConstruct usada para executar o método logo após a criação
-     * deste bean. É necessário criar uma transação manualmente pois o spring
-     * ainda não consegue criar automaticamente nesse ponto(PostConstruct).
+     * Anotaï¿½ï¿½o PostConstruct usada para executar o mï¿½todo logo apï¿½s a criaï¿½ï¿½o
+     * deste bean. ï¿½ necessï¿½rio criar uma transaï¿½ï¿½o manualmente pois o spring
+     * ainda nï¿½o consegue criar automaticamente nesse ponto(PostConstruct).
      * 
      * @throws Exception
      */
@@ -75,10 +83,19 @@ class Bootstrap {
             usuario = new Usuario();
             usuario.setNome("Administrador");
             usuario.setEmail("administrador");
-            // alterar esta senha quando em produção
+            // alterar esta senha quando em produï¿½ï¿½o
             usuario.setSenha(new Sha256Hash("123456").toHex());
             usuario.getGrupoSet().add(grupo);
             usuarioDAO.save(usuario);
+        }
+
+        if (generoDocumentalDAO.count() == 0) {
+            generoDocumentalDAO.save(new GeneroDocumental("Audiovisual"));
+            generoDocumentalDAO.save(new GeneroDocumental("BibliogrÃ¡fico"));
+            generoDocumentalDAO.save(new GeneroDocumental("CartogrÃ¡fico"));
+            generoDocumentalDAO.save(new GeneroDocumental("IconogrÃ¡fico"));
+            generoDocumentalDAO.save(new GeneroDocumental("EletrÃ´nico"));
+            generoDocumentalDAO.save(new GeneroDocumental("Textual"));
         }
     }
 }
