@@ -23,6 +23,7 @@
 		<servlet.version>3.1.0</servlet.version>
 		<spring.version>3.2.16.RELEASE</spring.version>
 		<resteasy.version>2.2.3.GA</resteasy.version>
+		<log4j.version>2.5</log4j.version>
 	</properties>
 
 	<dependencies>
@@ -90,6 +91,26 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
 			<version>3.5.6-Final</version>
+		</dependency>
+
+		<!-- Para realizar consultas full text search -->
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+
+		<!-- Inclusão do log4j para log da aplicação -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
 		</dependency>
 
 		<!-- Driver JDBC 4 para conexão com banco de dados -->
