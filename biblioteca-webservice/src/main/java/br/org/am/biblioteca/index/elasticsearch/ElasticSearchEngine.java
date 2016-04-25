@@ -1,20 +1,24 @@
 package br.org.am.biblioteca.index.elasticsearch;
 
+import java.net.InetAddress;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
 import org.springframework.stereotype.Component;
 
 import br.org.am.biblioteca.index.IndexException;
 import br.org.am.biblioteca.index.interfaces.DocumentoSearchResponse;
 import br.org.am.biblioteca.index.interfaces.IndexEngine;
 import br.org.am.biblioteca.model.Documento;
+import br.org.am.biblioteca.rest.json.View;
 
 @Component
 class ElasticSearchEngine implements IndexEngine {
@@ -23,38 +27,50 @@ class ElasticSearchEngine implements IndexEngine {
     private static final String INDEX_NAME = "documentos";
     private static final String TYPE_NAME = "documento";
 
-    private Node node;
+    private Client client;
 
     public void start() throws IndexException {
-        node = NodeBuilder.nodeBuilder().clusterName(CLUSTER_NAME).node();
+        try {
+            Settings settings = Settings.settingsBuilder()
+                    .put("cluster.name", CLUSTER_NAME).build();
+            client = TransportClient.builder().settings(settings).build()
+                    .addTransportAddress(new InetSocketTransportAddress(
+                            InetAddress.getByName("localhost"), 9300));
+        } catch (Exception e) {
+            throw new IndexException(e.getMessage(), e);
+        }
     }
 
     public void stop() throws IndexException {
-        if (node != null) {
-            node.close();
+        try {
+            if (client != null) {
+                client.close();
+            }
+        } catch (Exception e) {
+            throw new IndexException(e.getMessage(), e);
         }
     }
 
     public boolean indexDocumento(Documento documento) throws IndexException {
         if (documento == null) {
-            logger.debug("documento inv·lido");
+            logger.debug("documento inv√°lido");
             return false;
         }
 
-        if (node == null) {
-            logger.debug("node n„o iniciado.");
+        if (client == null) {
+            logger.debug("client n√£o iniciado.");
             return false;
         }
 
         ObjectMapper mapper = new ObjectMapper();
         byte[] docJson = null;
         try {
-            docJson = mapper.writeValueAsBytes(documento);
+            docJson = mapper.writerWithView(View.Public.class)
+                    .writeValueAsBytes(documento);
         } catch (Exception e) {
             throw new IndexException(e.getMessage(), e);
         }
 
-        Client client = node.client();
         IndexResponse indexResponse = client
                 .prepareIndex(INDEX_NAME, TYPE_NAME, documento.getId()).setSource(docJson)
                 .get();
@@ -63,7 +79,6 @@ class ElasticSearchEngine implements IndexEngine {
         } else {
             logger.debug("documento atualizado.");
         }
-        client.close();
         return true;
     }
 
@@ -74,16 +89,19 @@ class ElasticSearchEngine implements IndexEngine {
             return null;
         }
 
-        if (node == null) {
-            logger.debug("node n„o iniciado.");
+        if (client == null) {
+            logger.debug("client n√£o iniciado.");
             return null;
         }
 
-        Client client = node.client();
-        SearchResponse response = client.prepareSearch(INDEX_NAME).setTypes(TYPE_NAME)
-                .setQuery(QueryBuilders.multiMatchQuery(query, fieldNames))
-                .setFrom(offset).setSize(max).execute().actionGet();
-        client.close();
+        try {
+            SearchResponse response = client.prepareSearch(INDEX_NAME).setTypes(TYPE_NAME)
+                    .setQuery(QueryBuilders.multiMatchQuery(query, fieldNames))
+                    .setFrom(offset).setSize(max).execute().actionGet();
+        } catch (Exception e) {
+            throw new IndexException(e.getMessage(), e);
+        }
+
         // TODO: testar
         return null;
     }

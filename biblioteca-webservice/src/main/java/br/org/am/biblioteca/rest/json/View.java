@@ -6,7 +6,10 @@ package br.org.am.biblioteca.rest.json;
  *
  */
 public class View {
-    public static class Public {
+    public static class Index {
+    }
+
+    public static class Public extends Index {
     }
 
     public static class Private extends Public {

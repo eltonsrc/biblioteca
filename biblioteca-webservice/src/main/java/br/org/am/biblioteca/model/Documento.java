@@ -18,17 +18,17 @@ public class Documento extends BaseModel {
 
     @JsonView(View.Public.class)
     private String codRef;
-    @JsonView(View.Public.class)
+    @JsonView(View.Index.class)
     private String tituloFormal;
-    @JsonView(View.Public.class)
+    @JsonView(View.Index.class)
     private String tituloAtribuido;
-    @JsonView(View.Public.class)
+    @JsonView(View.Index.class)
     private String descr;
     @JsonView(View.Public.class)
     private Date dataProducao;
     @JsonView(View.Public.class)
     private String dimensaoSuporte;
-    @JsonView(View.Public.class)
+    @JsonView(View.Index.class)
     private String nomeProdutores;
     @JsonView(View.Public.class)
     private Date dataCriacao;
@@ -38,9 +38,9 @@ public class Documento extends BaseModel {
     private Usuario usuarioCriador;
     @JsonView(View.Public.class)
     private Usuario usuarioAtualizador;
-    @JsonView(View.Public.class)
+    @JsonView(View.Index.class)
     private GeneroDocumental generoDocumental;
-    @JsonView(View.Public.class)
+    @JsonView(View.Index.class)
     private IndexacaoDocumento indexacaoDocumento;
 
     @Column(nullable = false, unique = true, length = 255)
