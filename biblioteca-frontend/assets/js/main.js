@@ -7114,6 +7114,8 @@ function(a, b, c) {
         }, function(a) {
             alert("Erro na comunicação com o servidor.");
         });
+    }, a.isAdmin = function() {
+        return b.isAdmin();
     };
 } ]), angular.module("biblioteca").controller("usuarioController", [ "$scope", "$location", "usuarioService", "usuarioList", "usuario", function(a, b, c, d, e) {
     a.validSenha = !0, a.grupo = [], a.usuarioList = d, a.usuario = e;
@@ -7145,17 +7147,35 @@ function(a, b, c) {
             401 == a.status ? alert("Você não tem autorização para excluir este usuário.") : alert("Ocorreu um erro status: " + a.status);
         });
     }, f(a.usuario) && (a.isAdmin = !0);
-} ]), angular.module("biblioteca").factory("authService", [ "$http", "serverConstants", "base64", function(a, b, c) {
-    var d = function(d, e, f, g) {
-        a.defaults.headers.common.Authorization = "Basic " + c.encode(d + ":" + e), a.get(b.URL + "/auth/login").then(f, g);
-    }, e = function(c, d) {
-        a.get(b.URL + "/auth/logout").then(c, d);
-    };
-    return {
-        login: d,
-        logout: e
-    };
-} ]), angular.module("biblioteca").factory("documentoService", [ "$http", "serverConstants", function(a, b) {
+} ]), function() {
+    function a(a, b, c, d) {
+        function e(e, f, g, h) {
+            a.defaults.headers.common.Authorization = "Basic " + c.encode(e + ":" + f), a.get(b.URL + "/auth/login").then(function(a) {
+                d.create(a.data), console.log(a), g(a);
+            }, h);
+        }
+        function f() {
+            return !!d.usuario;
+        }
+        function g() {
+            return f() ? d.usuario.grupoSet.find(function(a) {
+                return "admin" == a.nome;
+            }) : !1;
+        }
+        function h(c, e) {
+            a.get(b.URL + "/auth/logout").then(function(a) {
+                d.destroy(), c(a);
+            }, e);
+        }
+        return {
+            login: e,
+            isAuthenticated: f,
+            isAdmin: g,
+            logout: h
+        };
+    }
+    angular.module("biblioteca").factory("authService", a), a.$inject = [ "$http", "serverConstants", "base64", "session" ];
+}(), angular.module("biblioteca").factory("documentoService", [ "$http", "serverConstants", function(a, b) {
     var c = function(c, d, e) {
         c.id ? a.put(b.URL + "/documento", c).then(d, e) : a.post(b.URL + "/documento", c).then(d, e);
     }, d = function(c, d, e) {
@@ -7180,7 +7200,16 @@ function(a, b, c) {
         getGeneroList: e,
         searchDocumento: g
     };
-} ]), angular.module("biblioteca").factory("usuarioService", [ "$http", "serverConstants", function(a, b) {
+} ]), function() {
+    function a() {
+        this.create = function(a) {
+            this.usuario = a;
+        }, this.destroy = function() {
+            this.usuario = null;
+        };
+    }
+    angular.module("biblioteca").service("session", a), a.$inject = [];
+}(), angular.module("biblioteca").factory("usuarioService", [ "$http", "serverConstants", function(a, b) {
     var c = function(c, d, e) {
         c.id ? a.put(b.URL + "/usuario", c).then(d, e) : a.post(b.URL + "/usuario", c).then(d, e);
     }, d = function(c, d, e) {

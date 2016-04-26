@@ -1,15 +1,44 @@
-angular.module("biblioteca").factory("authService", ["$http", "serverConstants", "base64", function ($http, serverConstants, base64) {
-	var _login = function (email, senha, success, failure) {
-		$http.defaults.headers.common['Authorization'] = 'Basic ' + base64.encode(email + ':' + senha);
-		$http.get(serverConstants.URL + "/auth/login").then(success, failure);
-	};
+(function(){
+	angular.module('biblioteca').factory('authService', authService);
 
-	var _logout = function (success, failure) {
-		$http.get(serverConstants.URL + "/auth/logout").then(success, failure);
-	};
+	authService.$inject = ['$http', 'serverConstants', 'base64', 'session'];
 
-	return {
-		login: _login,
-		logout: _logout
-	};
-}]);
+	function authService($http, serverConstants, base64, session) {
+		return {
+			login: _login,
+			isAuthenticated: _isAuthenticated,
+			isAdmin: _isAdmin,
+			logout: _logout
+		};
+
+		function _login(email, senha, success, failure) {
+			$http.defaults.headers.common['Authorization'] = 'Basic ' + base64.encode(email + ':' + senha);
+			$http.get(serverConstants.URL + '/auth/login').then(function(response) {
+				session.create(response.data);
+				console.log(response);
+				success(response);
+			}, failure);
+		};
+
+		function _isAuthenticated() {
+			return !!session.usuario;
+		}
+
+		function _isAdmin() {
+			if (!_isAuthenticated()) {
+				return false;
+			}
+
+			return session.usuario.grupoSet.find(function(grupo) {
+				return grupo.nome == "admin";
+			});
+		}
+
+		function _logout(success, failure) {
+			$http.get(serverConstants.URL + '/auth/logout').then(function(response) {
+				session.destroy();
+				success(response);
+			}, failure);
+		};
+	}
+})();

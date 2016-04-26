@@ -16,4 +16,8 @@ angular.module("biblioteca").controller("loginController", ["$scope", "authServi
 			alert("Erro na comunicação com o servidor.");
 		});
 	};
+
+	$scope.isAdmin = function () {
+		return authService.isAdmin();
+	};
 }]);
