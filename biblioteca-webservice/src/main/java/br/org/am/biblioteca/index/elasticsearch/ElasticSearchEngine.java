@@ -96,15 +96,14 @@ class ElasticSearchEngine implements IndexEngine {
         }
 
         try {
-            SearchResponse response = client.prepareSearch(INDEX_NAME).setTypes(TYPE_NAME)
+            final SearchResponse response = client.prepareSearch(INDEX_NAME)
+                    .setTypes(TYPE_NAME)
                     .setQuery(QueryBuilders.multiMatchQuery(query, fieldNames))
                     .setFrom(offset).setSize(max).execute().actionGet();
+            return new DocumentoSearchResponseElasticsearch(response);
         } catch (Exception e) {
             throw new IndexException(e.getMessage(), e);
         }
-
-        // TODO: testar
-        return null;
     }
 
     public long getTotalDocIndexed() throws IndexException {

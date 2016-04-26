@@ -24,10 +24,21 @@ angular.module("biblioteca").factory("documentoService", ["$http", "serverConsta
 		$http.delete(serverConstants.URL + "/documento/" + id).then(success, failure);
 	};
 
+	var _searchDocumento = function(query, max, offset, success, failure) {
+		$http.get(serverConstants.URL + "/documento/search", {
+			params: {
+				query: query,
+				max: max,
+				offset: offset
+			}
+		}).then(success, failure);
+	};
+
 	return {
 		saveDocumento: _saveDocumento,
 		getDocumento: _getDocumento,
 		deleteDocumento: _deleteDocumento,
-		getGeneroList: _getGeneroList
+		getGeneroList: _getGeneroList,
+		searchDocumento: _searchDocumento
 	};
 }]);
