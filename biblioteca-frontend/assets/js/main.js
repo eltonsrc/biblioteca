@@ -7086,13 +7086,20 @@ function(a, b, c) {
     };
 } ]), angular.module("biblioteca").controller("homeCtrl", [ "$scope", "documentoService", function(a, b) {
     var c = 10;
-    a.buscar = function() {
-        console.log("buscar"), b.searchDocumento(a.query, c, 0, function(b) {
-            console.log(b), a.documentos = null, a.total = 0, b.data && (a.documentos = b.data.documentoList, 
-            a.total = b.data.total);
+    a.buscar = function(e) {
+        e || (e = 1);
+        var f = c * (e - 1);
+        b.searchDocumento(a.query, c, f, function(b) {
+            a.documentos = null, a.total = 0, a.paginate = [], a.actualPage = e, b.data && (a.documentos = b.data.documentoList, 
+            a.total = b.data.total, d(c, a.total));
         }, function(a) {
             console.log(a);
         });
+    };
+    var d = function(b, c) {
+        var d = c / b;
+        1 > d && (d = 1);
+        for (var e = 1; d >= e; e++) a.paginate.push(e);
     };
 } ]), angular.module("biblioteca").controller("loginController", [ "$scope", "authService", "$location", function(a, b, c) {
     a.invalidLogin = !1, a.login = function() {
