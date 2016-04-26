@@ -16,4 +16,9 @@ class DocumentoDAOHibernate extends HibernateDAO<Documento> implements Documento
         return (Documento) getCurrentSession().createQuery(hql).setParameter(0, codRef)
                 .uniqueResult();
     }
+
+    public long getTotal() {
+        String hql = "select count(doc) from Documento doc";
+        return (Long) getCurrentSession().createQuery(hql).uniqueResult();
+    }
 }

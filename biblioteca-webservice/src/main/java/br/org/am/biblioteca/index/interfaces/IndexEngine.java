@@ -12,4 +12,6 @@ public interface IndexEngine {
 
     DocumentoSearchResponse searchDocumento(String query, int max, int offset,
             String... fieldNames) throws IndexException;
+
+    long getTotalDocIndexed() throws IndexException;
 }

@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.elasticsearch.action.count.CountResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -104,5 +105,21 @@ class ElasticSearchEngine implements IndexEngine {
 
         // TODO: testar
         return null;
+    }
+
+    public long getTotalDocIndexed() throws IndexException {
+        if (client == null) {
+            logger.debug("client não iniciado.");
+            throw new IndexException("client não iniciado.");
+        }
+
+        try {
+            CountResponse response = client.prepareCount(INDEX_NAME).execute()
+                    .actionGet();
+            logger.debug(response);
+            return response.getCount();
+        } catch (Exception e) {
+            throw new IndexException(e.getMessage(), e);
+        }
     }
 }
