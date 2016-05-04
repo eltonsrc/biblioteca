@@ -12,9 +12,12 @@ module.exports = function(grunt) {
             production: {
                 files: {
                     'assets/js/main.js': [
+                    'bower_components/jquery/dist/jquery.js',
+                    'bower_components/bootstrap/js/modal.js',
                     'bower_components/angular/angular.js',
                     'bower_components/angular-route/angular-route.js',
                     'bower_components/angular-utf8-base64/angular-utf8-base64.js',
+                    'bower_components/angular-ui-mask/dist/mask.js',
                     'app/**/*.js']
                 }
             },
@@ -24,9 +27,12 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'assets/js/main.js': [
+                    'bower_components/jquery/dist/jquery.js',
+                    'bower_components/bootstrap/js/modal.js',
                     'bower_components/angular/angular.js',
                     'bower_components/angular-route/angular-route.js',
                     'bower_components/angular-utf8-base64/angular-utf8-base64.js',
+                    'bower_components/angular-ui-mask/dist/mask.js',
                     'app/**/*.js']
                 }
             }

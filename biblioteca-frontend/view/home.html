@@ -26,10 +26,26 @@
       </thead>
       <tbody>
         <tr ng-repeat="documento in documentos">
-          <td>{{documento.tituloFormal}}</td>
-          <td>{{documento.tituloAtribuido}}</td>
-          <td>{{documento.indexacaoDocumento.nivelDescricao}}</td>
-          <td>{{documento.indexacaoDocumento.localizacaoInterna}}</td>
+          <td>
+            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#docModal" ng-click="getDocumento(documento.id)">
+              {{documento.tituloFormal}}
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#docModal" ng-click="getDocumento(documento.id)">
+              {{documento.tituloAtribuido}}
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#docModal" ng-click="getDocumento(documento.id)">
+              {{documento.indexacaoDocumento.nivelDescricao}}
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#docModal" ng-click="getDocumento(documento.id)">
+              {{documento.indexacaoDocumento.localizacaoInterna}}
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -40,5 +56,52 @@
         <a ng-click="buscar(page)">{{page}}</a>
       </li>
     </ul>
+  </div>
+
+  <div id="docModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Documento</h4>
+        </div>
+        <div class="modal-body">
+          <label>Código de refência</label>
+          <p>{{viewDocumento.codRef}}</p>
+          <label>Título formal</label>
+          <p>{{viewDocumento.tituloFormal}}</p>
+          <label>Título atribuído</label>
+          <p>{{viewDocumento.tituloAtribuido}}</p>
+          <label>Descrição semântica</label>
+          <p>{{viewDocumento.descr}}</p>
+          <label>Data de produção</label>
+          <p>{{formatDate(viewDocumento.dataProducao)}}</p>
+          <label>Data de acumulação</label>
+          <p>{{formatDate(viewDocumento.indexacaoDocumento.dataAcumulacao)}}</p>
+          <label>Espécie documental</label>
+          <p>{{viewDocumento.indexacaoDocumento.especieDocumental}}</p>
+          <label>Gênero documental</label>
+          <p>{{viewDocumento.generoDocumental.genero}}</p>
+          <label>Nível de descrição</label>
+          <p>{{viewDocumento.indexacaoDocumento.nivelDescricao}}</p>
+          <label>Dimensão e suporte</label>
+          <p>{{viewDocumento.dimensaoSuporte}}</p>
+          <label>Nome dos produtores</label>
+          <p>{{viewDocumento.nomeProdutores}}</p>
+          <label>Notas sobre conservação</label>
+          <p>{{viewDocumento.indexacaoDocumento.notasConservacao}}</p>
+          <label>Notas gerais</label>
+          <p>{{viewDocumento.indexacaoDocumento.notasGerais}}</p>
+          <label>Pontos de acesso e indexação</label>
+          <p>{{viewDocumento.indexacaoDocumento.palavrasChaves}}</p>
+          <label>Localização interna</label>
+          <p>{{viewDocumento.indexacaoDocumento.localizacaoInterna}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

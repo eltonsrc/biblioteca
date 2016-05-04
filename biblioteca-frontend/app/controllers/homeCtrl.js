@@ -1,5 +1,7 @@
 angular.module("biblioteca").controller("homeCtrl", ["$scope", "documentoService", function ($scope, documentoService) {
     var MAX = 10;
+    $scope.formatDate = _formatDate;
+    $scope.getDocumento = _getDocumento;
     $scope.buscar = function(page) {
         if (!page) {
             page = 1;
@@ -22,6 +24,27 @@ angular.module("biblioteca").controller("homeCtrl", ["$scope", "documentoService
             console.log(response);
         });
     };
+
+    function _getDocumento(id) {
+        documentoService.getDocumento(id, function(response) {
+            if (response.data) {
+                $scope.viewDocumento = response.data;
+            }
+        }, function(response) {
+            console.log(response);
+        });
+    }
+
+    function _formatDate(miliseconds) {
+        if (!miliseconds) {
+            return "";
+        }
+
+        var date = new Date(miliseconds);
+        var month = date.getMonth() + 1;
+        month = (month < 10)?"0" + month:month;
+        return date.getDate() + "/" + month + "/" + date.getFullYear();
+    }
 
     var montaPaginacao = function(max, total) {
         var pages = total / max;
