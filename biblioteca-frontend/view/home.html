@@ -22,6 +22,7 @@
           <th>Título Atribuído</th>
           <th>Nível de descrição</th>
           <th>Localização interna</th>
+          <th>Ação</th>
         </tr>
       </thead>
       <tbody>
@@ -45,6 +46,9 @@
             <button type="button" class="btn btn-link" data-toggle="modal" data-target="#docModal" ng-click="getDocumento(documento.id)">
               {{documento.indexacaoDocumento.localizacaoInterna}}
             </button>
+          </td>
+          <td>
+            <a class="btn btn-warning" href="#/documento/{{documento.id}}">Editar</a>
           </td>
         </tr>
       </tbody>
