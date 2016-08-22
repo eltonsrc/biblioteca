@@ -55,4 +55,14 @@
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/rest/*</url-pattern>
 	</filter-mapping>
+
+	<!-- Configuração do filter para permitir CORS -->
+	<filter>
+		<filter-name>CORSFilter</filter-name>
+		<filter-class>br.org.am.biblioteca.rest.CORSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CORSFilter</filter-name>
+		<url-pattern>/rest/*</url-pattern>
+	</filter-mapping>
 </web-app>
