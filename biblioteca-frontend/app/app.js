@@ -1,1 +1,3 @@
-angular.module("biblioteca", ["ngRoute", "ab-base64"]);
+(function() {
+    angular.module('biblioteca', ['ngRoute', 'ab-base64', 'ngCookies']);
+})();

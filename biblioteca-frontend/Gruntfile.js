@@ -16,6 +16,7 @@ module.exports = function(grunt) {
                     'bower_components/bootstrap/js/modal.js',
                     'bower_components/angular/angular.js',
                     'bower_components/angular-route/angular-route.js',
+                    'bower_components/angular-cookies/angular-cookies.js',
                     'bower_components/angular-utf8-base64/angular-utf8-base64.js',
                     'bower_components/angular-ui-mask/dist/mask.js',
                     'app/**/*.js']
@@ -31,6 +32,7 @@ module.exports = function(grunt) {
                     'bower_components/bootstrap/js/modal.js',
                     'bower_components/angular/angular.js',
                     'bower_components/angular-route/angular-route.js',
+                    'bower_components/angular-cookies/angular-cookies.js',
                     'bower_components/angular-utf8-base64/angular-utf8-base64.js',
                     'bower_components/angular-ui-mask/dist/mask.js',
                     'app/**/*.js']

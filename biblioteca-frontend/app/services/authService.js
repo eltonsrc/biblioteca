@@ -15,13 +15,12 @@
 			$http.defaults.headers.common['Authorization'] = 'Basic ' + base64.encode(email + ':' + senha);
 			$http.get(serverConstants.URL + '/auth/login').then(function(response) {
 				session.create(response.data);
-				console.log(response);
 				success(response);
 			}, failure);
 		};
 
 		function _isAuthenticated() {
-			return !!session.usuario;
+			return !!session.getUsuario();
 		}
 
 		function _isAdmin() {
@@ -29,7 +28,7 @@
 				return false;
 			}
 
-			return session.usuario.grupoSet.find(function(grupo) {
+			return session.getUsuario().grupoSet.find(function(grupo) {
 				return grupo.nome == "admin";
 			});
 		}
