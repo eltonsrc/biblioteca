@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.elasticsearch.action.count.CountResponse;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
@@ -85,21 +86,20 @@ class ElasticSearchEngine implements IndexEngine {
 
     public DocumentoSearchResponse searchDocumento(String query, int max, int offset,
             String... fieldNames) throws IndexException {
-        if (query == null) {
-            logger.debug("nada para procurar.");
-            return null;
-        }
-
         if (client == null) {
             logger.debug("client não iniciado.");
             return null;
         }
 
         try {
-            final SearchResponse response = client.prepareSearch(INDEX_NAME)
-                    .setTypes(TYPE_NAME)
-                    .setQuery(QueryBuilders.multiMatchQuery(query, fieldNames))
-                    .setFrom(offset).setSize(max).execute().actionGet();
+            SearchRequestBuilder srb = client.prepareSearch(INDEX_NAME)
+                    .setTypes(TYPE_NAME).setFrom(offset).setSize(max);
+
+            if (query != null && !query.isEmpty()) {
+                srb.setQuery(QueryBuilders.multiMatchQuery(query, fieldNames));
+            }
+
+            final SearchResponse response = srb.execute().actionGet();
             return new DocumentoSearchResponseElasticsearch(response);
         } catch (Exception e) {
             throw new IndexException(e.getMessage(), e);

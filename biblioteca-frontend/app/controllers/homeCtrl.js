@@ -2,7 +2,11 @@ angular.module("biblioteca").controller("homeCtrl", ["$scope", "documentoService
     var MAX = 10;
     $scope.formatDate = _formatDate;
     $scope.getDocumento = _getDocumento;
-    $scope.buscar = function(page) {
+    $scope.buscar = _buscar;
+
+    _buscar();
+
+    function _buscar(page) {
         if (!page) {
             page = 1;
         }
@@ -46,7 +50,7 @@ angular.module("biblioteca").controller("homeCtrl", ["$scope", "documentoService
         return date.getDate() + "/" + month + "/" + date.getFullYear();
     }
 
-    var montaPaginacao = function(max, total) {
+    function montaPaginacao(max, total) {
         var pages = total / max;
 
         if (pages < 1) {
