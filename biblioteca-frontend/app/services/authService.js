@@ -28,9 +28,16 @@
 				return false;
 			}
 
-			return session.getUsuario().grupoSet.find(function(grupo) {
-				return grupo.nome == "admin";
-			});
+			var grupoList = session.getUsuario().grupoSet;
+			var i;
+
+			for (i in grupoList) {
+				if (grupoList[i].nome == 'admin') {
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		function _logout(success, failure) {
