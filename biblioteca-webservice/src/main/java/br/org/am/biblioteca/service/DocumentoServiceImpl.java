@@ -23,6 +23,16 @@ import br.org.am.biblioteca.model.GeneroDocumental;
 @Transactional
 class DocumentoServiceImpl implements DocumentoService {
     private static final Logger logger = LogManager.getLogger(DocumentoServiceImpl.class);
+
+    private static final String COD_REF = "codRef";
+    private static final String TITULO_FORMAL = "tituloFormal";
+    private static final String TITULO_ATRIBUIDO = "tituloAtribuido";
+    private static final String DESCRICAO = "descr";
+    private static final String NOME_PRODUTORES = "nomeProdutores";
+    private static final String GENERO = "generoDocumental.genero";
+    private static final String PALAVRAS_CHAVES = "indexacaoDocumento.palavrasChaves";
+    private static final String LOCALIZACAO_INTERNA = "indexacaoDocumento.localizacaoInterna";
+
     private GeneroDocumentalDAO generoDocumentalDAO;
     private DocumentoDAO documentoDAO;
     private IndexEngine indexEngine;
@@ -79,6 +89,8 @@ class DocumentoServiceImpl implements DocumentoService {
 
     public DocumentoSearchResponse searchDocumento(String query, int max, int offset)
             throws IndexException {
-        return indexEngine.searchDocumento(query, max, offset, "tituloFormal");
+        return indexEngine.searchDocumento(query, max, offset, COD_REF, TITULO_FORMAL,
+                TITULO_ATRIBUIDO, DESCRICAO, NOME_PRODUTORES, GENERO, PALAVRAS_CHAVES,
+                LOCALIZACAO_INTERNA);
     }
 }
