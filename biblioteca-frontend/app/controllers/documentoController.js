@@ -1,34 +1,31 @@
 (function() {
   angular.module('biblioteca').controller('documentoController', documentoController);
 
-  documentoController.$inject = ['$scope', '$location', 'documentoService', 'generoDocumentalList', 'documento', '$filter'];
+  documentoController.$inject = ['$location', 'documentoService', 'generoDocumentalList', 'documento', '$filter'];
 
-  function documentoController($scope, $location, documentoService, generoDocumentalList, documento, $filter) {
-    var parseStringToDate = function (input) {
-      var parts = input.split('/');
-      // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
-      // Note: months are 0-based
-      return new Date(parts[2], parts[1]-1, parts[0]);
-    };
+  function documentoController($location, documentoService, generoDocumentalList, documento, $filter) {
+    var vm = this;
+    vm.saveDocumento = saveDocumento;
+    vm.generoDocumentalList = generoDocumentalList;
+    vm.documento = documento;
 
-    var parseDateToString = function (date) {
-      return $filter('date')(date, "dd/MM/yyyy");
-    };
+    activate();
 
-    $scope.generoDocumentalList = generoDocumentalList;
-    $scope.documento = documento;
-
-    if ($scope.documento) {
-      if ($scope.documento.dataProducao) {
-        $scope.documento.dataProducao = parseDateToString($scope.documento.dataProducao);
+    function activate() {
+      if (!vm.documento) {
+        return;
       }
 
-      if ($scope.documento.indexacaoDocumento.dataAcumulacao) {
-        $scope.documento.indexacaoDocumento.dataAcumulacao = parseDateToString($scope.documento.indexacaoDocumento.dataAcumulacao);
+      if (vm.documento.dataProducao) {
+        vm.documento.dataProducao = parseDateToString(vm.documento.dataProducao);
+      }
+
+      if (vm.documento.indexacaoDocumento.dataAcumulacao) {
+        vm.documento.indexacaoDocumento.dataAcumulacao = parseDateToString(vm.documento.indexacaoDocumento.dataAcumulacao);
       }
     }
 
-    $scope.saveDocumento = function() {
+    function saveDocumento() {
       var documento = angular.copy($scope.documento);
 
       if (documento.dataProducao) {
@@ -52,6 +49,17 @@
       }, function(response) {
         alert("Ocorreu um erro status: " + response.status);
       });
-    };
+    }
+
+    function parseStringToDate(input) {
+      var parts = input.split('/');
+      // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
+      // Note: months are 0-based
+      return new Date(parts[2], parts[1]-1, parts[0]);
+    }
+
+    function parseDateToString(date) {
+      return $filter('date')(date, "dd/MM/yyyy");
+    }
   }
 })();
