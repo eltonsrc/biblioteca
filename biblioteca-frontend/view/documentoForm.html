@@ -97,7 +97,7 @@
 					<input type="text" class="form-control" ng-model="documento.indexacaoDocumento.localizacaoInterna">
 				</div>
 
-				<button type="submit" class="btn btn-primary" ng-click="saveDocumento()" ng-disabled="documentoForm.$invalid">Salvar</button>
+				<button type="submit" class="btn btn-primary" ng-click="saveDocumento()" ng-disabled="documentoForm.$invalid || isSaving">Salvar</button>
 				<a class="btn btn-danger" href="#/home">Cancelar</a>
 			</form>
 		</div>

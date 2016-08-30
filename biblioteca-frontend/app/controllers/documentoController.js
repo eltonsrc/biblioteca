@@ -1,31 +1,32 @@
 (function() {
   angular.module('biblioteca').controller('documentoController', documentoController);
 
-  documentoController.$inject = ['$location', 'documentoService', 'generoDocumentalList', 'documento', '$filter'];
+  documentoController.$inject = ['$scope', '$location', 'documentoService', 'generoDocumentalList', 'documento', '$filter'];
 
-  function documentoController($location, documentoService, generoDocumentalList, documento, $filter) {
-    var vm = this;
-    vm.saveDocumento = saveDocumento;
-    vm.generoDocumentalList = generoDocumentalList;
-    vm.documento = documento;
+  function documentoController($scope, $location, documentoService, generoDocumentalList, documento, $filter) {
+    $scope.saveDocumento = saveDocumento;
+    $scope.generoDocumentalList = generoDocumentalList;
+    $scope.documento = documento;
+    $scope.isSaving = false;
 
     activate();
 
     function activate() {
-      if (!vm.documento) {
+      if (!$scope.documento) {
         return;
       }
 
-      if (vm.documento.dataProducao) {
-        vm.documento.dataProducao = parseDateToString(vm.documento.dataProducao);
+      if ($scope.documento.dataProducao) {
+        $scope.documento.dataProducao = parseDateToString($scope.documento.dataProducao);
       }
 
-      if (vm.documento.indexacaoDocumento.dataAcumulacao) {
-        vm.documento.indexacaoDocumento.dataAcumulacao = parseDateToString(vm.documento.indexacaoDocumento.dataAcumulacao);
+      if ($scope.documento.indexacaoDocumento.dataAcumulacao) {
+        $scope.documento.indexacaoDocumento.dataAcumulacao = parseDateToString($scope.documento.indexacaoDocumento.dataAcumulacao);
       }
     }
 
     function saveDocumento() {
+      $scope.isSaving = true;
       var documento = angular.copy($scope.documento);
 
       if (documento.dataProducao) {
@@ -39,6 +40,7 @@
       }
 
       documentoService.saveDocumento(documento, function(response) {
+        $scope.isSaving = false;
         var json = response.data;
 
         if (json.error) {
@@ -47,6 +49,7 @@
           $location.path("/home");
         }
       }, function(response) {
+        $scope.isSaving = false;
         alert("Ocorreu um erro status: " + response.status);
       });
     }
