@@ -52,6 +52,10 @@ angular.module("biblioteca").controller("usuarioController", ["$scope", "$locati
 	};
 
 	$scope.deleteUsuario = function(id) {
+		if (!confirm('Tem certeza que deseja apagar este usuário?')) {
+			return;
+		}
+
 		usuarioService.deleteUsuario(id, function(response) {
 			carregarUsuarioList();
 		}, function(response) {
