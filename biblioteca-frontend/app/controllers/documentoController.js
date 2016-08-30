@@ -1,51 +1,57 @@
-angular.module("biblioteca").controller("documentoController", ["$scope", "$location", "documentoService", "generoDocumentalList", "documento", "$filter", function ($scope, $location, documentoService, generoDocumentalList, documento, $filter) {
-	var parseStringToDate = function (input) {
-		var parts = input.split('/');
-  		// new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
-  		// Note: months are 0-based
-  		return new Date(parts[2], parts[1]-1, parts[0]);
-  	};
+(function() {
+  angular.module('biblioteca').controller('documentoController', documentoController);
 
-  	var parseDateToString = function (date) {
-  		return $filter('date')(date, "dd/MM/yyyy");
-  	};
+  documentoController.$inject = ['$scope', '$location', 'documentoService', 'generoDocumentalList', 'documento', '$filter'];
 
-  	$scope.generoDocumentalList = generoDocumentalList;
-  	$scope.documento = documento;
+  function documentoController($scope, $location, documentoService, generoDocumentalList, documento, $filter) {
+    var parseStringToDate = function (input) {
+      var parts = input.split('/');
+      // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
+      // Note: months are 0-based
+      return new Date(parts[2], parts[1]-1, parts[0]);
+    };
 
-  	if ($scope.documento) {
-  		if ($scope.documento.dataProducao) {
-  			$scope.documento.dataProducao = parseDateToString($scope.documento.dataProducao);
-  		}
+    var parseDateToString = function (date) {
+      return $filter('date')(date, "dd/MM/yyyy");
+    };
 
-  		if ($scope.documento.indexacaoDocumento.dataAcumulacao) {
-  			$scope.documento.indexacaoDocumento.dataAcumulacao = parseDateToString($scope.documento.indexacaoDocumento.dataAcumulacao);
-  		}
-  	}
+    $scope.generoDocumentalList = generoDocumentalList;
+    $scope.documento = documento;
 
-  	$scope.saveDocumento = function() {
-  		var documento = angular.copy($scope.documento);
+    if ($scope.documento) {
+      if ($scope.documento.dataProducao) {
+        $scope.documento.dataProducao = parseDateToString($scope.documento.dataProducao);
+      }
 
-  		if (documento.dataProducao) {
-  			documento.dataProducao = parseStringToDate(documento.dataProducao);
-  		}
+      if ($scope.documento.indexacaoDocumento.dataAcumulacao) {
+        $scope.documento.indexacaoDocumento.dataAcumulacao = parseDateToString($scope.documento.indexacaoDocumento.dataAcumulacao);
+      }
+    }
 
-  		if (documento.indexacaoDocumento) {
-  			if (documento.indexacaoDocumento.dataAcumulacao) {
-  				documento.indexacaoDocumento.dataAcumulacao = parseStringToDate(documento.indexacaoDocumento.dataAcumulacao);
-  			}
-  		}
+    $scope.saveDocumento = function() {
+      var documento = angular.copy($scope.documento);
 
-  		documentoService.saveDocumento(documento, function(response) {
-  			var json = response.data;
+      if (documento.dataProducao) {
+        documento.dataProducao = parseStringToDate(documento.dataProducao);
+      }
 
-  			if (json.error) {
-  				alert(json.error);
-  			} else {
-  				$location.path("/home");
-  			}
-  		}, function(response) {
-  			alert("Ocorreu um erro status: " + response.status);
-  		});
-  	};
-  }]);
+      if (documento.indexacaoDocumento) {
+        if (documento.indexacaoDocumento.dataAcumulacao) {
+          documento.indexacaoDocumento.dataAcumulacao = parseStringToDate(documento.indexacaoDocumento.dataAcumulacao);
+        }
+      }
+
+      documentoService.saveDocumento(documento, function(response) {
+        var json = response.data;
+
+        if (json.error) {
+          alert(json.error);
+        } else {
+          $location.path("/home");
+        }
+      }, function(response) {
+        alert("Ocorreu um erro status: " + response.status);
+      });
+    };
+  }
+})();
