@@ -122,16 +122,26 @@
 	</dependencies>
 
 	<build>
-		<finalName>biblioteca</finalName>
+	<finalName>biblioteca</finalName>
 
-		<plugins>
-			<!-- Executa jboss com o comando: mvn jboss-as:run -->
-			<!-- URL padrão: http://localhost:8080/biblioteca -->
-			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>7.7.Final</version>
-			</plugin>
-		</plugins>
-	</build>
+	<plugins>
+		<!-- Define qual versão do java a ser utilizada -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.5.1</version>
+			<configuration>
+				<source>1.7</source>
+				<target>1.7</target>
+			</configuration>
+		</plugin>
+		<!-- Executa jboss com o comando: mvn jboss-as:run -->
+		<!-- URL padrão: http://localhost:8080/biblioteca -->
+		<plugin>
+			<groupId>org.jboss.as.plugins</groupId>
+			<artifactId>jboss-as-maven-plugin</artifactId>
+			<version>7.7.Final</version>
+		</plugin>
+	</plugins>
+</build>
 </project>
