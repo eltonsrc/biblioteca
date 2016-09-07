@@ -102,6 +102,13 @@
           <p>{{viewDocumento.indexacaoDocumento.palavrasChaves}}</p>
           <label>Localização interna</label>
           <p>{{viewDocumento.indexacaoDocumento.localizacaoInterna}}</p>
+
+          <hr>
+
+          <label>Criado</label>
+          <p>{{viewDocumento.usuarioCriador.nome}}({{viewDocumento.usuarioCriador.email}}) - {{formatDateTime(viewDocumento.dataCriacao)}}</p>
+          <label>Atualizado</label>
+          <p>{{viewDocumento.usuarioAtualizador.nome}}({{viewDocumento.usuarioAtualizador.email}}) - {{formatDateTime(viewDocumento.dataAtualizacao)}}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
