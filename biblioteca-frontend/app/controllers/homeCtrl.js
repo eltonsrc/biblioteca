@@ -83,7 +83,7 @@ angular.module("biblioteca").controller("homeCtrl", ["$scope", "documentoService
             pages = 1;
         }
 
-        for (var i = 1; i <= pages; i++) {
+        for (var i = 1; i <= Math.ceil(pages); i++) {
             $scope.paginate.push(i);
         }
     }
