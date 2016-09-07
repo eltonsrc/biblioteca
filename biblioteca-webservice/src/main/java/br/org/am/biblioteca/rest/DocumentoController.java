@@ -3,6 +3,7 @@ package br.org.am.biblioteca.rest;
 import java.util.Date;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -85,6 +86,25 @@ public class DocumentoController extends BaseRestController {
             logger.error(e.getMessage(), e);
             return Response.status(500).entity(new ErrorJson(e.getMessage())).build();
         }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") String id) {
+        Documento doc = documentoService.findById(id);
+
+        if (doc == null) {
+            return Response.status(404).entity("").build();
+        }
+
+        try {
+            documentoService.delete(doc);
+        } catch (IndexException e) {
+            logger.error(e.getMessage(), e);
+            return Response.status(500).entity(new ErrorJson(e.getMessage())).build();
+        }
+
+        return Response.status(200).entity("").build();
     }
 
     private Response saveDocumento(Documento documento) {

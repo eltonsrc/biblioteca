@@ -1,44 +1,50 @@
-angular.module("biblioteca").factory("documentoService", ["$http", "serverConstants", function ($http, serverConstants) {
-	var _saveDocumento = function(documento, success, failure) {
-		if (documento.id) {
-			$http.put(serverConstants.URL + "/documento", documento).then(success, failure);
-		} else {
-			$http.post(serverConstants.URL + "/documento", documento).then(success, failure);
-		}
-	};
+(function() {
+	angular.module('biblioteca').factory('documentoService', documentoService);
 
-	var _getDocumento = function(id, success, failure) {
-		if (id) {
-			return $http.get(serverConstants.URL + "/documento/" + id).then(success, failure);
-		} else {
-			// pega lista de usuários
-			return $http.get(serverConstants.URL + "/documento").then(success, failure);
-		}
-	};
+	documentoService.$inject = ['$http', 'serverConstants'];
 
-	var _getGeneroList = function(success, failure) {
-		return $http.get(serverConstants.URL + "/documento/generoList").then(success, failure);
-	};
+	function documentoService($http, serverConstants) {
+		return {
+			saveDocumento: _saveDocumento,
+			getDocumento: _getDocumento,
+			deleteDocumento: _deleteDocumento,
+			getGeneroList: _getGeneroList,
+			searchDocumento: _searchDocumento
+		};
 
-	var _deleteDocumento = function(id, success, failure) {
-		$http.delete(serverConstants.URL + "/documento/" + id).then(success, failure);
-	};
-
-	var _searchDocumento = function(query, max, offset, success, failure) {
-		$http.get(serverConstants.URL + "/documento/search", {
-			params: {
-				query: query,
-				max: max,
-				offset: offset
+		function _saveDocumento(documento, success, failure) {
+			if (documento.id) {
+				$http.put(serverConstants.URL + "/documento", documento).then(success, failure);
+			} else {
+				$http.post(serverConstants.URL + "/documento", documento).then(success, failure);
 			}
-		}).then(success, failure);
-	};
+		}
 
-	return {
-		saveDocumento: _saveDocumento,
-		getDocumento: _getDocumento,
-		deleteDocumento: _deleteDocumento,
-		getGeneroList: _getGeneroList,
-		searchDocumento: _searchDocumento
-	};
-}]);
+		function _getDocumento(id, success, failure) {
+			if (id) {
+				return $http.get(serverConstants.URL + "/documento/" + id).then(success, failure);
+			} else {
+				// pega lista de usuários
+				return $http.get(serverConstants.URL + "/documento").then(success, failure);
+			}
+		}
+
+		function _getGeneroList(success, failure) {
+			return $http.get(serverConstants.URL + "/documento/generoList").then(success, failure);
+		}
+
+		function _deleteDocumento(id, success, failure) {
+			$http.delete(serverConstants.URL + "/documento/" + id).then(success, failure);
+		}
+
+		function _searchDocumento(query, max, offset, success, failure) {
+			$http.get(serverConstants.URL + "/documento/search", {
+				params: {
+					query: query,
+					max: max,
+					offset: offset
+				}
+			}).then(success, failure);
+		}
+	}
+})();

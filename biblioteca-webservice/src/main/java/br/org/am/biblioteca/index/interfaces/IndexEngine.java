@@ -10,6 +10,8 @@ public interface IndexEngine {
 
     boolean indexDocumento(Documento documento) throws IndexException;
 
+    boolean removeDocumento(Documento documento) throws IndexException;
+
     DocumentoSearchResponse searchDocumento(String query, int max, int offset,
             String... fieldNames) throws IndexException;
 

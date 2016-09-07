@@ -3,6 +3,7 @@ angular.module("biblioteca").controller("homeCtrl", ["$scope", "documentoService
     $scope.formatDate = _formatDate;
     $scope.getDocumento = _getDocumento;
     $scope.buscar = _buscar;
+    $scope.deleteDocumento = _deleteDocumento;
 
     _buscar();
 
@@ -34,6 +35,19 @@ angular.module("biblioteca").controller("homeCtrl", ["$scope", "documentoService
             if (response.data) {
                 $scope.viewDocumento = response.data;
             }
+        }, function(response) {
+            console.log(response);
+        });
+    }
+
+    function _deleteDocumento(id) {
+        if (!confirm('Tem certeza que deseja apagar este documento?')) {
+            return;
+        }
+
+        documentoService.deleteDocumento(id, function(response) {
+            _buscar();
+            alert('Documento apagado');
         }, function(response) {
             console.log(response);
         });

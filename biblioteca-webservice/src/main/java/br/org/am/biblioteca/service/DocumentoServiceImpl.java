@@ -93,4 +93,10 @@ class DocumentoServiceImpl implements DocumentoService {
                 TITULO_ATRIBUIDO, DESCRICAO, NOME_PRODUTORES, GENERO, PALAVRAS_CHAVES,
                 LOCALIZACAO_INTERNA);
     }
+
+    @Override
+    public void delete(Documento documento) throws IndexException {
+        documentoDAO.remove(documento);
+        indexEngine.removeDocumento(documento);
+    }
 }

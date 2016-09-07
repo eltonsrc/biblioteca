@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.elasticsearch.action.count.CountResponse;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -117,6 +118,17 @@ class ElasticSearchEngine implements IndexEngine {
                     .actionGet();
             logger.debug(response);
             return response.getCount();
+        } catch (Exception e) {
+            throw new IndexException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public boolean removeDocumento(Documento documento) throws IndexException {
+        try {
+            DeleteResponse delete = client
+                    .prepareDelete(INDEX_NAME, TYPE_NAME, documento.getId()).get();
+            return delete.isFound();
         } catch (Exception e) {
             throw new IndexException(e.getMessage(), e);
         }

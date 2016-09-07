@@ -16,6 +16,8 @@ public interface DocumentoService {
 
     void save(Documento documento) throws IndexException;
 
+    void delete(Documento documento) throws IndexException;
+
     DocumentoSearchResponse searchDocumento(String query, int max, int offset)
             throws IndexException;
 }
