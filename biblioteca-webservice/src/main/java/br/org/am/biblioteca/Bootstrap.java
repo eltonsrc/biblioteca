@@ -84,7 +84,7 @@ class Bootstrap {
             usuario.setNome("Administrador");
             usuario.setEmail(Usuario.USUARIO_ADMINISTRADOR);
             // alterar esta senha quando em produ��o
-            usuario.setSenha(new Sha256Hash("123456").toHex());
+            usuario.setSenha(new Sha256Hash("@dm1n123").toHex());
             usuario.getGrupoSet().add(grupo);
             usuarioDAO.save(usuario);
         }
