@@ -35,7 +35,7 @@ public class UsuarioController extends BaseRestController {
 
     @GET
     @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     public Response listUsuario() {
         return Response.status(200)
                 .entity(parseToJson(usuarioService.list(), View.Public.class)).build();
@@ -43,7 +43,7 @@ public class UsuarioController extends BaseRestController {
 
     @GET
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     public Response getUsuario(@PathParam("id") String id) {
         return Response.status(200)
                 .entity(parseToJson(usuarioService.findById(id), View.Public.class))
@@ -52,7 +52,7 @@ public class UsuarioController extends BaseRestController {
 
     @POST
     @Path("/")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(JSON_UTF8)
     public Response createUsuario(Usuario usuario) {
         saveUsuario(usuario);
         return Response.status(200).entity("").build();
@@ -60,7 +60,7 @@ public class UsuarioController extends BaseRestController {
 
     @PUT
     @Path("/")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(JSON_UTF8)
     public Response updateUsuario(Usuario usuario) {
         saveUsuario(usuario);
         return Response.status(200).entity("").build();

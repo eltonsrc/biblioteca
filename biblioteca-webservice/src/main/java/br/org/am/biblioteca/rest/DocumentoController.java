@@ -40,7 +40,7 @@ public class DocumentoController extends BaseRestController {
 
     @GET
     @Path("/generoList")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     public Response getGeneroList() {
         return Response.status(200)
                 .entity(parseToJson(documentoService.listAllGeneroDocumental(),
@@ -50,7 +50,7 @@ public class DocumentoController extends BaseRestController {
 
     @GET
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     public Response getDocumento(@PathParam("id") String id) {
         Documento doc = documentoService.findById(id);
         return Response.status(200).entity(parseToJson(doc, View.Public.class)).build();
@@ -58,7 +58,7 @@ public class DocumentoController extends BaseRestController {
 
     @POST
     @Path("/")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(JSON_UTF8)
     public Response createDocumento(Documento documento) {
         documento.setUsuarioCriador(getUsuarioLogado());
         documento.setDataCriacao(new Date());
@@ -67,14 +67,14 @@ public class DocumentoController extends BaseRestController {
 
     @PUT
     @Path("/")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(JSON_UTF8)
     public Response updateDocumento(Documento documento) {
         return saveDocumento(documento);
     }
 
     @GET
     @Path("/search")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     public Response searchDocumento(@QueryParam("query") String query,
             @QueryParam("max") int max, @QueryParam("offset") int offset) {
         DocumentoSearchResponse searchResponse;

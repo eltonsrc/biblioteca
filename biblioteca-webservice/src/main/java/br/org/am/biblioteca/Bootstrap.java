@@ -18,7 +18,7 @@ import br.org.am.biblioteca.model.Grupo;
 import br.org.am.biblioteca.model.Usuario;
 
 /**
- * Classe usada para iniciar valores no banco de dados. N�O confundir com o
+ * Classe usada para iniciar valores no banco de dados. NÃO confundir com o
  * framework front-end Bootstrap.
  *
  */
@@ -50,9 +50,9 @@ class Bootstrap {
     }
 
     /**
-     * Anota��o PostConstruct usada para executar o m�todo logo ap�s a cria��o
-     * deste bean. � necess�rio criar uma transa��o manualmente pois o spring
-     * ainda n�o consegue criar automaticamente nesse ponto(PostConstruct).
+     * Anotação PostConstruct usada para executar o método logo após a criação
+     * deste bean. É necessário criar uma transação manualmente pois o spring
+     * ainda não consegue criar automaticamente nesse ponto(PostConstruct).
      * 
      * @throws Exception
      */
@@ -83,7 +83,7 @@ class Bootstrap {
             usuario = new Usuario();
             usuario.setNome("Administrador");
             usuario.setEmail(Usuario.USUARIO_ADMINISTRADOR);
-            // alterar esta senha quando em produ��o
+            // alterar esta senha quando em produção
             usuario.setSenha(new Sha256Hash("@dm1n123").toHex());
             usuario.getGrupoSet().add(grupo);
             usuarioDAO.save(usuario);

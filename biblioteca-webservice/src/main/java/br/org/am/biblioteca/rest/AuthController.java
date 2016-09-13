@@ -20,7 +20,7 @@ import br.org.am.biblioteca.rest.json.View;
 public class AuthController extends BaseRestController {
     @GET
     @Path("/login")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     public Response login() {
         Subject subject = SecurityUtils.getSubject();
 
@@ -34,7 +34,7 @@ public class AuthController extends BaseRestController {
 
     @GET
     @Path("/logout")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     public Response logout() {
         SecurityUtils.getSubject().logout();
         return Response.ok().entity("").build();
@@ -42,7 +42,7 @@ public class AuthController extends BaseRestController {
 
     @GET
     @Path("/admin")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
     public Response isAdmin() {
         Usuario usuario = getUsuarioLogado();
 

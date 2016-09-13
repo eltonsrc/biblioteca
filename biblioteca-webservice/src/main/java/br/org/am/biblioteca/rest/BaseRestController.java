@@ -2,6 +2,8 @@ package br.org.am.biblioteca.rest;
 
 import java.io.IOException;
 
+import javax.ws.rs.core.MediaType;
+
 import org.apache.shiro.SecurityUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -14,6 +16,8 @@ import br.org.am.biblioteca.service.UsuarioService;
 
 public class BaseRestController {
     protected UsuarioService usuarioService;
+
+    public static final String JSON_UTF8 = MediaType.APPLICATION_JSON + "; charset=UTF-8";
 
     @Autowired
     public void setUsuarioService(UsuarioService usuarioService) {
